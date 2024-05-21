@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Hotel la Chana</title>
+    {% block style %}
+    <link rel="stylesheet" href="./styles/general.css">
+    {% endblock %}
+
+    {% block script %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    {% endblock %}
+</head>
+<body>
+<header>
+    <div>
+        <img src="./imagenes/logo.png" alt="Hotel La Chana" class="logo">
+        <h1>Hotel La Chana</h1>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="./index.html">Inicio</a></li>
+            <li><a href="./habitaciones.html">Habitaciones</a></li>
+            <li><a href="./servicios.html">Servicios</a></li>
+            <li><a href="./reservas.html">Reservas</a></li>
+            <li><a href="./registrarse.html">registrarse</a></li>
+        </ul>
+    </nav>
+</header>
+<div class="container">
+    <main>
+        <section>
+            <h2>Conoce nuestro hotel</h2>
+            <p>El Hotel La Chana es un hotel de 3 estrellas situado en la localidad de La Chana, en la provincia de Granada. El hotel cuenta con 50 habitaciones, todas ellas con baño privado, aire acondicionado, calefacción y televisión. Además, el hotel dispone de un restaurante, un bar y una piscina.</p>
+            <p>El hotel se encuentra a 10 minutos en coche del centro de Granada y a 20 minutos en coche de la Alhambra. Además, el hotel está situado a 30 minutos en coche de Sierra Nevada, donde se puede practicar esquí en invierno y senderismo en verano.</p>
+            <img src="./imagenes/hotel.jpg" alt="imagen del exterior del hotel">
+            <p>El hotel ofrece un servicio de traslado al aeropuerto de Granada, situado a 15 minutos en coche del hotel. Además, se dispone de aparcamiento gratuito para los clientes.</p>
+            <p>El hotel ofrece habitaciones individuales, dobles y triples, todas ellas con baño privado, aire acondicionado, calefacción y televisión, incluyendo habitaciones adaptadas para personas con movilidad reducida.</p>
+            <p>El hotel cuenta con un restaurante que ofrece desayuno, almuerzo y cena. El restaurante ofrece platos de la cocina tradicional andaluza, así como platos de la cocina internacional.</p>
+            <p>El hotel cuenta con un bar que ofrece una amplia selección de bebidas, así como aperitivos y tapas. Éste dispone de una terraza con vistas a la piscina, donde los clientes pueden relajarse y disfrutar de una copa.</p>
+            <p>El hotel cuenta con una piscina al aire libre, rodeada de jardines y terrazas. La piscina está abierta durante los meses de verano, y ofrece tumbonas y sombrillas para los clientes.</p>
+        </section>
+    </main>
+
+
+    <aside>
+        <h3>Eventos próximos</h3>
+        <ul>
+            <li><a href="#">Kayac por el Genil</a></li>
+            <li><a href="#">Feria de tecnología</a></li>
+            <li><a href="#">Fiesta conmemorativa 50 años</a></li>
+        </ul>
+
+    </aside>
+</div>
+
+<footer>
+    <a href="./caracteristicas.html">Características adaptables CSS</a>
+    <span>Hotel La Chana - C/ Granada, 123 - 18001 La Chana (Granada) - Teléfono: 958 123 456 - Email:hotelchana@gmail.com</span>
+</footer>
+</body>
+</html>
