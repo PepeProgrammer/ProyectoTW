@@ -1,0 +1,87 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.logo {
+    width: 100px;
+}
+
+.login_logo {
+    width: 50px;
+}
+
+.content {
+    display: flex;
+    min-height: 766px;
+}
+
+main {
+    width: 80%;
+}
+aside {
+    width: 20%;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    background: #dddda7;
+    align-items: center;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav ul li {
+    margin-right: 15px;
+}
+
+nav ul li a {
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+    color: white;
+    width: 100px;
+    padding: 10px;
+    background: #A5844F;
+    border-radius: 15px;
+}
+
+nav ul li a:hover {
+    background: white;
+    color: black;
+}
+
+footer {
+    background: #dddda7;
+    text-align: center;
+    padding: 10px;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+aside {
+    background: #dddda7;
+
+}
+aside h3 {
+    text-align: center;
+}
+
+.info {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+aside ul {
+    list-style-type: none;
+    align-self: center;
+    justify-self: center;
+}
