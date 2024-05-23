@@ -1,0 +1,33 @@
+{% extends 'origin.twig' %}
+
+    {% block style %}
+        {{ parent() }}
+        <link rel="stylesheet" href="../css/db.css">
+    {% endblock %}
+
+    {% block main %}
+        <main>
+            <h2>Gestión base de datos</h2>
+            <ul class="options">
+                <li onclick="">
+                    <span>Realizar copia de seguridad</span>
+                    <form action="db.php" method="post" novalidate>
+                        <button class="confirm" name="backup" type="submit">Hacer copia</button>
+                    </form>
+                </li>
+                <li>
+                    <span>Restaurar base de datos</span>
+                    <form action="db.php" method="post" enctype="multipart/form-data" novalidate>
+                        <input type="file" name="sql">
+                        <button class="warning" type="submit" name="restore">Restaurar</button>
+                    </form>
+                </li>
+                <li>
+                    <span>Reiniciar base de datos</span>
+                    <form action="db.php" method="post" novalidate>
+                        <button class="danger" name="delete" type="submit">Reiniciar</button>
+                    </form>
+                </li>
+            </ul>
+        </main>
+    {% endblock %}
