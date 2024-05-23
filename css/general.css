@@ -18,6 +18,7 @@ body {
 
 main {
     width: 80%;
+    margin: 10px;
 }
 aside {
     width: 20%;
@@ -84,4 +85,39 @@ aside ul {
     list-style-type: none;
     align-self: center;
     justify-self: center;
+}
+
+.hidden {
+    display: none;
+}
+
+button:active {
+    border: 0;
+    transform: scale(0.98);
+}
+button {
+    outline: none;
+    width: max-content;
+    padding: 10px;
+    border-radius: 15px;
+    border: 0;
+}
+
+button.confirm {
+    background: #118a11;
+    color: white;
+}
+
+.confirm:hover {
+    background: #159a15;
+}
+
+button.danger {
+    background: red;
+    color: white;
+}
+
+button.warning {
+    background: orange;
+    color: white;
 }
