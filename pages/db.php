@@ -25,13 +25,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if (isset($_POST['delete'])) {
             $backup->delete();
+            $_SESSION['message'] = 'Datos eliminados correctamente';
         } elseif (isset($_POST['restore']) && is_uploaded_file($_FILES['sql']['tmp_name'])) {
             $backup->restore(@file_get_contents($_FILES['sql']['tmp_name']));
+            $_SESSION['message'] = 'Datos restaurados correctamente';
         }
         header("Location: {$_SERVER['SCRIPT_NAME']}", true, 303);
         exit();
     }
 
+}
+
+if(isset($_SESSION['message'])) {
+    $twigVariables['message'] = $_SESSION['message'];
+    unset($_SESSION['message']);
 }
 
 
