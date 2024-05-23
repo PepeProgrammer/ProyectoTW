@@ -113,11 +113,18 @@ button.confirm {
 }
 
 button.danger {
-    background: red;
+    background: #ac0000;
     color: white;
 }
 
+.danger:hover {
+    background: red;
+}
+
 button.warning {
-    background: orange;
+    background: #ff8c00;
     color: white;
+}
+.warning:hover {
+    background: orange;
 }
