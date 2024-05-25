@@ -1,0 +1,32 @@
+{% extends 'origin.twig' %}
+
+    {% block style %}
+        {{ parent() }}
+        <link rel="stylesheet" href="../css/logs.css">
+    {% endblock %}
+
+{% block main %}
+    <main>
+        <h2>Registro de Logs</h2>
+        <div class="table_list">
+            {% if logs|length > 0 %}
+            <div class="element">
+                <span>Fecha</span>
+                <span>Mensaje</span>
+            </div>
+
+                    {% for log in logs %}
+                        <div class="element">
+                            <span>{{ log.time }}</span>
+                            <span>{{ log.description }}</span>
+                        </div>
+                    {% endfor %}
+            {% else %}
+                <p class="empty">Actualmente no hay logs registrados</p>
+            {% endif %}
+
+
+        </div>
+    </main>
+
+{% endblock %}
