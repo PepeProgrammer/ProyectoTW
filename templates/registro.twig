@@ -10,30 +10,34 @@
             <h1>Registro de usuarios</h1>
             <form action="../pages/registro.php" method="post" enctype="multipart/form-data" novalidate>
                 <h2>Datos personales</h2>
-                <div class="datos_personales">
+                <div class="personal_data">
 
                     <div class="inputs">
-                        <label for="nombre">Nombre:</label>
-                        <input type="text" id="nombre" name="nombre" value="{{ nombre }}" {{ confirmacion }}>
-                        {{ error_nombre }}
+                        <label for="name">Nombre:</label>
+                        <input type="text" id="name" name="name" value="{{ name }}" {{ confirmation }}>
+                        <span class='error'>{{ name_error }}</span>
+
                     </div>
 
                     <div class="inputs">
-                        <label for="apellidos">Apellidos:</label>
-                        <input type="text" id="apellidos" name="ape" value="{{ ape }}" {{ confirmacion }}>
-                        {{ error_apellidos }}
+                        <label for="sname">Apellidos:</label>
+                        <input type="text" id="sname" name="sname" value="{{ sname }}" {{ confirmation }}>
+                        <span class='error'>{{ sname_error }}</span>
+
                     </div>
 
                     <div class="inputs">
                         <label for="DNI">DNI:</label>
-                        <input type="text" id="DNI" name="DNI" value="{{ DNI }}" {{ confirmacion }}>
-                        {{ error_DNI }}
+                        <input type="text" id="DNI" name="DNI" value="{{ DNI }}" {{ confirmation }}>
+                        <span class='error'>{{ DNI_error }}</span>
+
                     </div>
 
                     <div class="inputs">
-                        <label for="tarjeta">Número tarjeta de crédito:</label>
-                        <input type="text" id="tarjeta" name="tarjeta" value="{{ tarjeta }}" {{ confirmacion }}>
-                        {{ error_tarjeta }}
+                        <label for="card">Número tarjeta de crédito:</label>
+                        <input type="text" id="card" name="card" value="{{ card }}" {{ confirmation }}>
+                        <span class='error'>{{ card_error }}</span>
+
                     </div>
                 </div>
 
@@ -41,23 +45,25 @@
                 <div class="datos_acceso">
                     <div class="inputs">
                         <label for="email">Email:</label>
-                        <input type="email" id="email" name="email" value="{{ email }}" {{ confirmacion }}>
-                        {{ error_email }}
+                        <input type="email" id="email" name="email" value="{{ email }}" {{ confirmation }}>
+                        <span class='error'>{{ email_error }}</span>
+
                     </div>
 
                     <div class="inputs">
-                        <label for="clave">Clave:</label>
-                        <input type="password" id="clave" name="clave" placeholder="Escriba la clave" value="{{ clave }}" {{ confirmacion }}>
+                        <label for="password">Clave:</label>
+                        <input type="password" id="password" name="password" placeholder="Escriba la clave" value="{{ password }}" {{ confirmation }}>
                     </div>
 
                     <div class="inputs">
-                        <label for="clave2">Repita la clave:</label>
-                        <input type="password" id="clave2" name="clave2" placeholder="Escriba la misma clave" value="{{ clave2 }}" {{ confirmacion }}>
-                        {{ error_clave }}
+                        <label for="password2">Repita la clave:</label>
+                        <input type="password" id="password2" name="password2" placeholder="Escriba la misma clave" value="{{ password2 }}" {{ confirmation }}>
+                        <span class='error'>{{ password_error }}</span>
+
                     </div>
                 </div>
 
-                <input type="submit" name="enviar" value="{{ texto_boton }}" id="enviar"/>
+                <input type="submit" name="send" value="{{ button_text }}" id="send"/>
             </form>
         </main>
     {% endblock %}

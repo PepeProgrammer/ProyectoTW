@@ -1,4 +1,4 @@
-.portada {
+.front {
     width: 100%;
 }
 
@@ -43,7 +43,7 @@ main li p {
     margin: 20px;
 }
 
-.texto_informacion {
+.information_text {
     margin: 10px 10px;
 }
 
