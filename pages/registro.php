@@ -1,6 +1,7 @@
 <?php
 require_once "../vendor/autoload.php";
 require_once "../models/AsideInfo.php";
+require_once "../models/Users.php";
 
 $loader = new \Twig\Loader\FilesystemLoader('../templates');
 $twig = new \Twig\Environment($loader);
@@ -151,6 +152,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if ($_POST['send'] === "Confirmar datos") {
+
+        $data['name'] = $name;
+        $data['lastname'] = $sname;
+        $data['dni'] = $DNI;
+        $data['email'] = $email;
+        $data['pass'] = password_hash($password, PASSWORD_DEFAULT);
+        $data['card'] = $card;
+        $data['type'] = "client";
+
+        // insertamos en la base de datos
+        $userDb = new Users();
+        $userDb->createUser($data);
         header('Location: index.php');
         exit;
     }
