@@ -1,0 +1,53 @@
+{% extends 'origin.twig' %}
+
+    {% block style %}
+        {{ parent() }}
+        <link rel="stylesheet" href="../css/servicios.css">
+    {% endblock %}
+
+    {% block main %}
+        <main>
+            <h1>Servicios del Kiano Hotel</h1>
+            <p>La excelencia en servicios es nuestro compromiso principal. Nuestro hotel ofrece una amplia gama de servicios diseñados
+                para satisfacer las necesidades más exigentes de nuestros huéspedes. Desde experiencias gastronómicas excepcionales
+                hasta indulgentes tratamientos de spa y emocionantes actividades recreativas, cada detalle está cuidadosamente diseñado
+                para brindar una estadía inolvidable. Sumérjase en el lujo y la sofisticación mientras exploramos juntos todo lo que Hotel
+                Kiano tiene para ofrecer.</p>
+            <ul>
+                <li>
+                    <img src="../images/servicio_habitacion.jpg" alt="fotografía de habitaciones">
+                    <div class="texto_informacion">
+                        <h2> Descansa tranquilo </h2>
+                        <p>Las habitaciones de Hotel Kiano están diseñadas para proporcionar un nivel inigualable de comodidad y bienestar.
+                            Cada habitación cuenta con amplios espacios, decorados con un estilo elegante y contemporáneo que invita a la
+                            relajación. también están equipadas con modernas comodidades, como control de temperatura individual,
+                            televisores de pantalla plana, Wi-Fi de alta velocidad y estaciones de trabajo ergonómicas, para que se
+                            sienta como en casa, ya sea que viaje por placer o por negocios. </p>
+                    </div>
+                </li>
+                <li>
+                    <img src="../images/SPA.png" alt="fotografía de un SPA">
+                    <div class="texto_informacion">
+                        <h2> Relajese en una experiencia SPA </h2>
+                        <p>Un servicio de spa en Hotel Kiano es un refugio de relajación y rejuvenecimiento que ofrece una amplia
+                            gama de tratamientos diseñados para revitalizar cuerpo, mente y espíritu. Nuestro spa cuenta con
+                            instalaciones de primera clase, que incluyen salas de masajes, sauna, jacuzzi y áreas de relajación,
+                            todo ello diseñado para crear un ambiente sereno y tranquilo donde los huéspedes puedan desconectar
+                            del estrés diario y dedicarse a cuidar de sí mismos.</p>
+                    </div>
+                </li>
+                <li>
+                    <img src="../images/gastronomia.jpg" alt="fotografía de comida" >
+                    <div class="texto_informacion">
+                        <h2> Saboré una experiencia única gastronómica </h2>
+                        <p>La experiencia gastronómica en Hotel Kiano es mucho más que simplemente una comida;
+                            es un viaje sensorial que celebra los sabores, la creatividad culinaria y la hospitalidad
+                            excepcional. Nuestro equipo de chefs talentosos y apasionados trabaja diligentemente para
+                            crear un menú diverso y emocionante que refleje lo mejor de la cocina local e internacional,
+                            utilizando ingredientes frescos y de la más alta calidad.
+                        </p>
+                    </div>
+                </li>
+            </ul>
+        </main>
+    {% endblock %}
