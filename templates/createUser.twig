@@ -1,0 +1,75 @@
+{% extends 'origin.twig' %}
+
+    {% block style %}
+        {{ parent() }}
+        <link rel="stylesheet" href="../css/createUser.css">
+    {% endblock %}
+
+    {% block main %}
+        <main>
+            <h1>Registro de usuarios</h1>
+            <form action="../pages/createUser.php" method="post" enctype="multipart/form-data" novalidate>
+                <h2>Datos personales</h2>
+                <div class="data">
+
+                    <div class="col">
+                        <div class="inputs">
+                            <label for="name">Nombre:</label>
+                            <input type="text" id="name" name="name" value="{{ name }}" {{ confirmation }}>
+                            <span class='error'>{{ name_error }}</span>
+
+                        </div>
+
+                        <div class="inputs">
+                            <label for="sname">Apellidos:</label>
+                            <input type="text" id="sname" name="sname" value="{{ sname }}" {{ confirmation }}>
+                            <span class='error'>{{ sname_error }}</span>
+
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="inputs">
+                            <label for="DNI">DNI:</label>
+                            <input type="text" id="DNI" name="DNI" value="{{ DNI }}" {{ confirmation }}>
+                            <span class='error'>{{ DNI_error }}</span>
+
+                        </div>
+
+                        <div class="inputs">
+                            <label for="card">Número tarjeta de crédito:</label>
+                            <input type="text" id="card" name="card" value="{{ card }}" {{ confirmation }}>
+                            <span class='error'>{{ card_error }}</span>
+
+                        </div>
+                    </div>
+                </div>
+
+                <h2>Datos de acceso</h2>
+                <div class="data">
+                    <div class="col">
+                        <div class="inputs">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" name="email" value="{{ email }}" {{ confirmation }}>
+                            <span class='error'>{{ email_error }}</span>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="inputs">
+                            <label for="password">Clave:</label>
+                            <input type="password" id="password" name="password" placeholder="Escriba la clave" value="{{ password }}" {{ confirmation }}>
+                        </div>
+
+                        <div class="inputs">
+                            <label for="password2">Repita la clave:</label>
+                            <input type="password" id="password2" name="password2" placeholder="Escriba la misma clave" value="{{ password2 }}" {{ confirmation }}>
+                            <span class='error'>{{ password_error }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <input type="submit" name="send" value="{{ button_text }}" id="send"/>
+            </form>
+        </main>
+    {% endblock %}

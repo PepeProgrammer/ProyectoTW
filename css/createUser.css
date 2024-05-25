@@ -1,0 +1,41 @@
+h1 {
+    text-align: center;
+    margin-top: 50px;
+}
+
+h2 {
+    margin: 0;
+}
+
+.data {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #dddda7;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 45%;
+}
+
+.col:nth-child(3) input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.error {
+    color: red;
+    text-align: center;
+}

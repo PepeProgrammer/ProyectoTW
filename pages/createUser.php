@@ -189,4 +189,4 @@ $twigVariables['confirmation'] = $confirmation;
 $twigVariables['button_text'] = $button_text;
 
 
-echo $twig->render('registro.twig', $twigVariables);
+echo $twig->render('createUser.twig', $twigVariables);
