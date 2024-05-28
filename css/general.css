@@ -1,6 +1,7 @@
 body {
     margin: 0;
     padding: 0;
+    background-color: #f4f4d9;
 }
 
 .logo {
@@ -19,9 +20,11 @@ body {
 main {
     width: 80%;
     margin: 10px;
+
 }
 aside {
     width: 20%;
+    border-left: 1px solid #A5844F;
 }
 
 header {
@@ -29,6 +32,7 @@ header {
     justify-content: space-between;
     background: #dddda7;
     align-items: center;
+    border-bottom: 1px solid #A5844F;
 }
 
 nav ul {
@@ -127,4 +131,8 @@ button.warning {
 }
 .warning:hover {
     background: orange;
+}
+
+.success {
+    color: #4d85ea;
 }

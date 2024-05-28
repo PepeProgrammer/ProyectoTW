@@ -8,6 +8,16 @@
     {% block main %}
         <main>
             <h1>Registro de usuarios</h1>
+            {%  if error is defined %}
+                <div class="error">
+                    <p>{{ error }}</p>
+                </div>
+                {% elseif correct_text is defined %}
+                <div class="success">
+                    <p>{{ correct_text }}</p>
+                </div>
+            {% endif %}
+
             <form action="../pages/createUser.php" method="post" enctype="multipart/form-data" novalidate>
                 <h2>Datos personales</h2>
                 <div class="data">
@@ -69,7 +79,7 @@
                     </div>
                 </div>
 
-                <input type="submit" name="send" value="{{ button_text }}" id="send"/>
+                <button type="submit" name="send" id="send" value="{{ button_text }}">{{ button_text }}</button>
             </form>
         </main>
     {% endblock %}

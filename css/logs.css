@@ -36,4 +36,8 @@ h2 {
     color: #4d85ea;
 }
 
+.table_list div:nth-child(1) {
+    border-bottom: 4px solid black;
+}
+
 

@@ -39,3 +39,11 @@ h2 {
     color: red;
     text-align: center;
 }
+
+.success {
+    text-align: center;
+}
+
+button {
+    text-align: center;
+}

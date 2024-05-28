@@ -2,6 +2,7 @@
 require_once "../vendor/autoload.php";
 require_once "../models/AsideInfo.php";
 require_once "../models/Users.php";
+require_once "../models/Logs.php";
 
 $loader = new \Twig\Loader\FilesystemLoader('../templates');
 $twig = new \Twig\Environment($loader);
@@ -99,8 +100,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } elseif ($password !== $password2) {
                 $password_error = "Deben coincidir ambas claves";
                 $correct = false;
-            } elseif (strlen($password) < 5) {
-                $password_error = "La clave debe tener al menos 5 caracteres";
+            } elseif (strlen($password) < 3) {
+                $password_error = "La clave debe tener al menos 3 caracteres";
                 $correct = false;
             }
         }
@@ -149,6 +150,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($correct) {
         $confirmation = "readonly";
         $button_text = "Confirmar datos";
+        $twigVariables['correct_text'] = "Se han introducido los datos correctamente. Pulse el botón para confirmar";
     }
 
     if ($_POST['send'] === "Confirmar datos") {
@@ -163,9 +165,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // insertamos en la base de datos
         $userDb = new Users();
-        $userDb->createUser($data);
-        header('Location: index.php');
-        exit;
+        if (!$userDb->createUser($data)){
+            $twigVariables['error'] = "Error al insertar el usuario en la base de datos";
+            $confirmation = "";
+        }else{
+            $logs = new Logs();
+            $logs->insertLog("Nuevo usuario creado. Email: " . $email);
+            header('Location: index.php');
+            exit;
+        }
+
     }
 
 }

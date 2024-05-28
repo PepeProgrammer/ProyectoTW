@@ -16,12 +16,8 @@ class Users
         try {
             $prepare->execute();
         } catch (Exception $e) {
-            header('Location: error_createUser.php');
-            exit;
+            return false;
         }
-
-
-
-        $prepare->execute();
+        return true;
     }
 }
