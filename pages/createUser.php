@@ -37,7 +37,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (isset($_POST['name'])) {
             $name = strip_tags($_POST['name']);
-            $name = htmlentities($name, ENT_QUOTES, 'UTF-8');
             if ($name === "") {
                 $name_error = "El nombre no puede estar vacío";
                 $correct = false;
@@ -46,7 +45,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (isset($_POST['sname'])) {
             $sname = strip_tags($_POST['sname']);
-            $sname = htmlentities($sname, ENT_QUOTES, 'UTF-8');
             if ($sname === "") {
                 $sname_error = "Los apellidos no pueden estar vacío";
                 $correct = false;
@@ -55,7 +53,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (isset($_POST['DNI'])) {
             $DNI = strip_tags($_POST['DNI']);
-            $DNI = htmlentities($DNI, ENT_QUOTES, 'UTF-8');
             if ($DNI === "") {
                 $DNI_error = "El DNI no puede estar vacío";
                 $correct = false;
@@ -77,7 +74,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (isset($_POST['email'])) {
             $email = strip_tags($_POST['email']);
-            $email = htmlentities($email, ENT_QUOTES, 'UTF-8');
             if ($email === "") {
                 $email_error = "Debe indicar un email de contacto";
                 $correct = false;
@@ -91,9 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (isset($_POST['password']) && isset($_POST['password2'])) {
             $password = strip_tags($_POST['password']);
-            $password = htmlentities($password, ENT_QUOTES, 'UTF-8');
             $password2 = strip_tags($_POST['password2']);
-            $password2 = htmlentities($password2, ENT_QUOTES, 'UTF-8');
             if ($password === "") {
                 $password_error = "La clave no puede estar vacía";
                 $correct = false;
@@ -108,7 +102,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (isset($_POST['card'])) {
             $card = strip_tags($_POST['card']);
-            $card = htmlentities($card, ENT_QUOTES, 'UTF-8');
             if ($card === "") {
                 $card_error = "Debe indicar un número de tarjeta";
                 $correct = false;
