@@ -1,0 +1,35 @@
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+form {
+    display: flex;
+    flex-direction: column;
+    background: #e6e6ba;
+    border-radius: 15px;
+    padding: 15px;
+}
+
+label, input {
+    width: 300px;
+    padding: 0;
+}
+
+label {
+    font-size: 12px;
+}
+
+input {
+    margin-bottom: 20px;
+}
+
+button {
+    align-self: center;
+}
+
+h2 {
+    text-align: center;
+}

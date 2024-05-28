@@ -1,0 +1,66 @@
+h2 {
+    text-align: center;
+}
+
+span {
+    display: flex;
+    align-self: center;
+}
+
+.table_list {
+    display: grid;
+    grid-template-columns: repeat(7, auto);
+    padding: 15px;
+}
+
+
+.odd {
+    background: #e6e6ba;
+}
+
+.even {
+    background: #A5844F;
+}
+
+.border {
+    border-bottom: 4px solid black;
+}
+
+.element {
+    display: contents;
+
+}
+
+.element span {
+    padding: 10px;
+}
+
+.element:first-child {
+    font-weight: bold;
+}
+
+.empty {
+    text-align: center;
+    font-size: 20px;
+    color: #4d85ea;
+}
+
+.image_button {
+    width: 35px;
+    cursor: pointer;
+}
+
+.element div {
+    display: flex;
+    justify-content: center;
+}
+
+
+.element div *:first-child {
+    margin-right: 10px;
+}
+
+
+
+
+

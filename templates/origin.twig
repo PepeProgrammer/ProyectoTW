@@ -20,10 +20,24 @@
             <li><a href="./habitaciones.php">Habitaciones</a></li>
             <li><a href="./servicios.php">Servicios</a></li>
             <li><a href="./reservas.php">Reservas</a></li>
+            {% if user is not defined %}
             <li><a href="./createUser.php">registrarse</a></li>
+            {% endif %}
+            {% if user.type is defined and user.type != 'client'%}
+                <li><a href="./users.php">Usuarios</a></li>
+            {% endif %}
+            {% if user.type == 'admin' %}
+                <li><a href="./db.php">Base datos</a></li>
+                <li><a href="./logs.php">Logs</a></li>
+            {% endif %}
+
         </ul>
     </nav>
-    <a href="#"><img src="../images/login.png" class="login_logo"></a>
+    {% if user is not defined %}
+        <a href="login.php"><img src="../images/login.png" class="login_logo"></a>
+    {% else %}
+        <a href="logout.php"><img src="../images/logout.png" class="login_logo"></a>
+    {% endif %}
 </header>
 <div class="content">
     {% block main %}
@@ -34,7 +48,7 @@
         <h3>Información sobre el hotel</h3>
         <ul>
             <li><span class="info">{{ aside.rooms ? aside.rooms : 0 }}</span> habitaciones en el hotel</li>
-            <li><span class="info">{{ aside.freeroms ? aside.freeroms : 0}}</span> habitaciones libres</li>
+            <li><span class="info">{{ aside.freeroms ? aside.freeroms : 0 }}</span> habitaciones libres</li>
             <li><span class="info">{{ aside.max ? aside.max : 0 }}</span> personas máximo</li>
             <li><span class="info">{{ aside.hosted ? aside.hosted : 0 }}</span> personas alojadas</li>
         </ul>

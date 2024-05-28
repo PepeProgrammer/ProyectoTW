@@ -105,6 +105,12 @@ button {
     padding: 10px;
     border-radius: 15px;
     border: 0;
+    background: #A5844F;
+}
+
+button:hover {
+    cursor: pointer;
+    background: #8f7144;
 }
 
 button.confirm {
@@ -135,4 +141,10 @@ button.warning {
 
 .success {
     color: #4d85ea;
+    text-align: center;
+}
+
+.error {
+    color: red;
+    text-align: center;
 }
