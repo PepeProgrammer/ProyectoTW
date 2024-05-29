@@ -1,5 +1,5 @@
 <?php
-
+ require_once "Database.php";
 class Logs
 {
     private $db;
@@ -11,7 +11,7 @@ class Logs
 
     public function getLogs()
     {
-        $prepare = $this->db->prepare("SELECT * FROM logs");
+        $prepare = $this->db->prepare("SELECT * FROM logs order by time desc");
         $prepare->execute();
         return $prepare->get_result()->fetch_all(MYSQLI_ASSOC);
     }

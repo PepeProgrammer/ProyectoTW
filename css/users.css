@@ -11,6 +11,8 @@ span {
     display: grid;
     grid-template-columns: repeat(7, auto);
     padding: 15px;
+    max-height: 630px;
+    overflow-y: auto;
 }
 
 
@@ -58,6 +60,15 @@ span {
 
 .element div *:first-child {
     margin-right: 10px;
+}
+main {
+    display: flex;
+    flex-direction: column;
+
+}
+button {
+    margin-top: 10px;
+    align-self: center;
 }
 
 

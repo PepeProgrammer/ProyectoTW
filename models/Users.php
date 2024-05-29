@@ -75,17 +75,31 @@ class Users
     {
         if ($data['pass'] !== "") { //Si se actualiza la contraseña debemos poder modificarla
             $sql = "UPDATE users SET name = ?, lastname = ?, dni = ?, email = ?, pass = ?, card = ?";
+            $bind = "ssssss";
         } else {
             $sql = "UPDATE users SET name = ?, lastname = ?, dni = ?, email = ?, card = ?";
+            $bind = "sssss";
+        }
+
+        if (isset($data['type'])) {
+            $sql .= ", type = ?";
+            $bind .= "s";
         }
 
         $sql .= " WHERE id = ?";
+        $bind .= "i";
         $prepare = $this->db->prepare($sql);
 
         if ($data['pass'] !== "") {
-            $prepare->bind_param("sssssss", $data['name'], $data['lastname'], $data['dni'], $data['email'], $data['pass'], $data['card'], $id);
+            if (isset($data['type']))
+                $prepare->bind_param($bind, $data['name'], $data['lastname'], $data['dni'], $data['email'], $data['pass'], $data['card'], $data['type'], $id);
+            else
+                $prepare->bind_param($bind, $data['name'], $data['lastname'], $data['dni'], $data['email'], $data['pass'], $data['card'], $id);
         } else {
-            $prepare->bind_param("ssssss", $data['name'], $data['lastname'], $data['dni'], $data['email'], $data['card'], $id);
+            if (isset($data['type']))
+                $prepare->bind_param($bind, $data['name'], $data['lastname'], $data['dni'], $data['email'], $data['card'], $data['type'], $id);
+            else
+                $prepare->bind_param($bind, $data['name'], $data['lastname'], $data['dni'], $data['email'], $data['card'], $id);
         }
 
         try {
@@ -96,5 +110,6 @@ class Users
         }
         return true;
     }
+
 
 }

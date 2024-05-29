@@ -40,6 +40,8 @@ $password = "";
 $password2 = "";
 $card = "";
 $confirmation = "";
+$types = ['client', 'recepcionist', 'admin'];
+
 if(!isset($_SESSION['update'])){
     $button_text = "Enviar datos";
 } else {
@@ -57,6 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_SESSION['user']) && $_SESSION
             $email = $user['email'];
             $card = $user['card'];
             $twigVariables['title'] = 'Modificación de usuario';
+            $twigVariables['type'] = $user['type'];
             $button_text = 'Modificar datos';
             $_SESSION['update'] = $_GET['id']; // para saber que estamos actualizando un usuario
         }
@@ -187,6 +190,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
             }
         }
+
+        if(isset($_POST['type'])){
+            if(!in_array($_POST['type'], $types)){
+                $correct = false;
+                $twigVariables['type_error'] = "El tipo de usuario no es válido";
+            } else {
+                $twigVariables['type_hidden'] = $_POST['type'];
+                $twigVariables['type'] = $_POST['type'];
+
+            }
+        }
     }
 
 
@@ -223,6 +237,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $data['pass'] = "";
             } else {
                 $data['pass'] = password_hash($password, PASSWORD_DEFAULT);
+            }
+
+            if(isset($_POST['type'])){
+                $data['type'] = $_POST['type'];
             }
 
             if (!$userDb->updateUser($data, $_SESSION['update'])) {
