@@ -111,5 +111,19 @@ class Users
         return true;
     }
 
+    public function deleteUser($id)
+    {
+        $sql = "DELETE FROM users WHERE id = ?";
+        $prepare = $this->db->prepare($sql);
+        $prepare->bind_param("i", $id);
+        try {
+            $prepare->execute();
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return false;
+        }
+        return true;
+    }
+
 
 }

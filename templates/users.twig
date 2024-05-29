@@ -5,11 +5,16 @@
         <link rel="stylesheet" href="../css/users.css">
     {% endblock %}
 
+    {% block script %}
+        {{ parent() }}
+        <script src="../js/users.js"></script>
+    {% endblock %}
+
 {% block main %}
     <main>
         <h2>Usuarios</h2>
+        {% if users|length > 0 %}
         <div class="table_list">
-            {% if users|length > 0 %}
                 <div class="element">
                     <span class="border odd">Nombre</span>
                     <span class="border odd">Apellido</span>
@@ -40,19 +45,21 @@
                             <a href="createUser.php?id={{ user.id }}">
                                 <img src="../images/edit.png" class="image_button" alt="icono para editar usuario"/>
                             </a>
-                            <img src="../images/delete.png" class="image_button" alt="icono para borrar usuario"/>
+                            <img src="../images/delete.png" class="image_button" alt="icono para borrar usuario" onclick="generateDeleteUserModal({{ user.id }},'{{user.email }}')"/>
                         </div>
                     </div>
                 {% endfor %}
-            {% else %}
-                <p class="empty">Actualmente no hay usuarios registrados</p>
-            {% endif %}
 
 
         </div>
+        {% else %}
+            <p class="empty">Actualmente no hay usuarios registrados</p>
+        {% endif %}
+        {% if message is defined %}
+            <p class="success">{{ message }}</p>
+        {% endif %}
         <button onclick="window.location.href='createUser.php'">Crear usuario</button>
 
-        <p class="success">{{ message }}</p>
     </main>
 
 {% endblock %}

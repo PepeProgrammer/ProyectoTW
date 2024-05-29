@@ -10,7 +10,7 @@ $loader = new \Twig\Loader\FilesystemLoader('../templates');
 $twig = new \Twig\Environment($loader);
 
 $twigVariables = [];
-if(isset($_SESSION['user'])){
+if (isset($_SESSION['user'])) {
     $twigVariables['user'] = $_SESSION['user'];
 }
 
@@ -21,6 +21,8 @@ if (isset($_SESSION['user']) && $_SESSION['user']['type'] === 'client') {
     header('Location: index.php');
     exit();
 }
+
+$logs = new Logs();
 
 $twigVariables['aside'] = $asideInfo->getAsideInfo();
 $twigVariables['title'] = 'Registro de usuarios';
@@ -42,15 +44,15 @@ $card = "";
 $confirmation = "";
 $types = ['client', 'recepcionist', 'admin'];
 
-if(!isset($_SESSION['update'])){
+if (!isset($_SESSION['update'])) {
     $button_text = "Enviar datos";
 } else {
     $button_text = 'Modificar datos';
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_SESSION['user']) && $_SESSION['user']['type'] !== "client") {
+    $userDb = new Users();
     if (isset($_GET['id'])) {
-        $userDb = new Users();
         $user = $userDb->getUser($_GET['id']);
         if ($user and !($user['type'] !== 'client' and $_SESSION['user']['type'] === 'recepcionist')) { //Con esto evitamos que un recepcionsta pueda modificar a un administrador por la fuerza
             $name = $user['name'];
@@ -73,7 +75,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (isset($_POST['name'])) {
             $name = strip_tags($_POST['name']);
-            $name = htmlentities($name, ENT_QUOTES, 'UTF-8');
             if ($name === "") {
                 $name_error = "El nombre no puede estar vacío";
                 $correct = false;
@@ -82,7 +83,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (isset($_POST['sname'])) {
             $sname = strip_tags($_POST['sname']);
-            $sname = htmlentities($sname, ENT_QUOTES, 'UTF-8');
             if ($sname === "") {
                 $sname_error = "Los apellidos no pueden estar vacío";
                 $correct = false;
@@ -91,7 +91,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (isset($_POST['DNI'])) {
             $DNI = strip_tags($_POST['DNI']);
-            $DNI = htmlentities($DNI, ENT_QUOTES, 'UTF-8');
             if ($DNI === "") {
                 $DNI_error = "El DNI no puede estar vacío";
                 $correct = false;
@@ -113,7 +112,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (isset($_POST['email'])) {
             $email = strip_tags($_POST['email']);
-            $email = htmlentities($email, ENT_QUOTES, 'UTF-8');
             if ($email === "") {
                 $email_error = "Debe indicar un email de contacto";
                 $correct = false;
@@ -124,12 +122,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
             }
         }
-         if ( isset($_POST['password']) && isset($_POST['password2'])) {
+        if (isset($_POST['password']) && isset($_POST['password2'])) {
             $password = $_POST['password'];
             $password2 = strip_tags($_POST['password2']);
-            $password2 = htmlentities($password2, ENT_QUOTES, 'UTF-8');
 
-            if(!isset($_SESSION['update'])){ //En caso de que estemos actualizando podemos dejar la contraseña vacía
+            if (!isset($_SESSION['update'])) { //En caso de que estemos actualizando podemos dejar la contraseña vacía
                 $password = strip_tags($_POST['password']);
                 if ($password === "") {
                     $password_error = "La clave no puede estar vacía";
@@ -142,20 +139,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $correct = false;
                 }
             } else {
-               if ($password !== $password2) {
+                if ($password !== $password2) {
                     $password_error = "Deben coincidir ambas claves";
                     $correct = false;
                 } elseif (strlen($password) > 0 && strlen($password) < 3) {
-                   $password_error = "La clave debe tener al menos 3 caracteres";
-                   $correct = false;
-               }
+                    $password_error = "La clave debe tener al menos 3 caracteres";
+                    $correct = false;
+                }
             }
 
         }
 
         if (isset($_POST['card'])) {
             $card = strip_tags($_POST['card']);
-            $card = htmlentities($card, ENT_QUOTES, 'UTF-8');
             if ($card === "") {
                 $card_error = "Debe indicar un número de tarjeta";
                 $correct = false;
@@ -191,8 +187,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
 
-        if(isset($_POST['type'])){
-            if(!in_array($_POST['type'], $types)){
+        if (isset($_POST['type'])) {
+            if (!in_array($_POST['type'], $types)) {
                 $correct = false;
                 $twigVariables['type_error'] = "El tipo de usuario no es válido";
             } else {
@@ -217,7 +213,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $data['dni'] = $DNI;
         $data['email'] = $email;
         $data['card'] = $card;
-        $data['type'] = "client";
+        if (isset($_POST['type'])) {
+            $data['type'] = $_POST['type'];
+        } else
+            $data['type'] = "client";
 
         $userDb = new Users();
         if (!isset($_SESSION['update'])) {
@@ -226,9 +225,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $twigVariables['error'] = "Error al insertar el usuario en la base de datos";
                 $confirmation = "";
             } else {
-                $logs = new Logs();
-                $logs->insertLog("Nuevo usuario creado. Email: " . $email);
-                header('Location: index.php');
+                if (isset($_SESSION['user'])) {
+                    $logs->insertLog("Nuevo usuario creado por " . $_SESSION['user']['id'] . ". Email: " . $email);
+                    $_SESSION['success'] = "Usuario creado correctamente";
+                    header('Location: users.php');
+                } else {
+                    $logs->insertLog("Nuevo usuario creado. Email: " . $email);
+                    header('Location: index.php');
+                }
                 exit;
             }
         } else {
@@ -239,7 +243,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $data['pass'] = password_hash($password, PASSWORD_DEFAULT);
             }
 
-            if(isset($_POST['type'])){
+            if (isset($_POST['type'])) {
                 $data['type'] = $_POST['type'];
             }
 
@@ -247,8 +251,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $twigVariables['error'] = "Error al actualizar el usuario en la base de datos";
                 $confirmation = "";
             } else {
-
-                $logs = new Logs();
                 $logs->insertLog("Usuario modificado. Id: " . $_SESSION['update']);
                 $_SESSION['success'] = "Usuario modificado correctamente";
                 unset($_SESSION['update']);
