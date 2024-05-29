@@ -279,8 +279,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
 
-        // insertamos en la base de datos
-
 
     }
 
