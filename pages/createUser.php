@@ -17,7 +17,7 @@ if (isset($_SESSION['user'])) {
 $asideInfo = new AsideInfo();
 
 
-if (isset($_SESSION['user']) && $_SESSION['user']['type'] === 'client' && !isset($_GET['profile'])) { //solo no redireccionamos si el cliente quiere ver su perfil
+if (isset($_SESSION['user']) && $_SESSION['user']['type'] === 'client' && !isset($_GET['profile']) && !isset($_SESSION['update'])) { //solo no redireccionamos si el cliente quiere ver su perfil
     header('Location: index.php');
     exit();
 }

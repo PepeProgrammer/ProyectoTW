@@ -17,6 +17,12 @@ body {
     min-height: 766px;
 }
 
+.title {
+    text-align: center;
+    margin: 0;
+    color: #A5844F;
+}
+
 main {
     width: 80%;
     margin: 10px;
@@ -35,6 +41,10 @@ header {
     border-bottom: 1px solid #A5844F;
 }
 
+nav {
+    background: #A5844F;
+    padding: 5px;
+}
 nav ul {
     list-style-type: none;
     margin: 0;
