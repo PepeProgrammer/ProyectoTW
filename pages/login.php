@@ -13,18 +13,19 @@ $twigVariables = [];
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
+    $logs = new Logs();
     $userDb = new Users();
     $user = $userDb->getUserByEmail($_POST['user']);
     if($user && password_verify($_POST['password'], $user['pass'])) {
         $_SESSION['user'] = $user;
         unset($_SESSION['user']['pass']); //No queremos guardar la contraseña en la sesión
-        $logs = new Logs();
         $logs->insertLog('Usario inició sesión. Email: ' . $user['email']);
         header('Location: index.php');
         exit();
     } else {
         $twigVariables['email'] = $_POST['user'];
         $twigVariables['error'] = 'Usuario o contraseña incorrectos';
+        $logs->insertLog("Intento de inicio de sesión fallido. Email: {$_POST['user']}");
     }
 }
 $asideInfo = new AsideInfo();

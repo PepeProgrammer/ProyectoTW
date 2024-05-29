@@ -41,4 +41,10 @@ h2 {
 
 button {
     text-align: center;
+    align-self: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
 }

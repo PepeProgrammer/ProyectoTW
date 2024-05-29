@@ -17,7 +17,7 @@ if (isset($_SESSION['user'])) {
 $asideInfo = new AsideInfo();
 
 
-if (isset($_SESSION['user']) && $_SESSION['user']['type'] === 'client') {
+if (isset($_SESSION['user']) && $_SESSION['user']['type'] === 'client' && !isset($_GET['profile'])) { //solo no redireccionamos si el cliente quiere ver su perfil
     header('Location: index.php');
     exit();
 }
@@ -50,8 +50,8 @@ if (!isset($_SESSION['update'])) {
     $button_text = 'Modificar datos';
 }
 
+$userDb = new Users();
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_SESSION['user']) && $_SESSION['user']['type'] !== "client") {
-    $userDb = new Users();
     if (isset($_GET['id'])) {
         $user = $userDb->getUser($_GET['id']);
         if ($user and !($user['type'] !== 'client' and $_SESSION['user']['type'] === 'recepcionist')) { //Con esto evitamos que un recepcionsta pueda modificar a un administrador por la fuerza
@@ -68,6 +68,23 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_SESSION['user']) && $_SESSION
 
     }
 }
+
+
+
+if(isset($_GET['profile'])) {
+
+    $user = $userDb->getUser($_SESSION['user']['id']);
+    $name = $user['name'];
+    $sname = $user['lastname'];
+    $DNI = $user['dni'];
+    $email = $user['email'];
+    $card = $user['card'];
+    $twigVariables['title'] = 'Perfil de usuario';
+    $button_text = 'Modificar datos';
+    $confirmation = "readonly";
+    $_SESSION['update'] = $twigVariables['auto_update'] = $_SESSION['user']['id'];
+}
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['send'])) {
@@ -219,7 +236,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $data['type'] = "client";
 
         $userDb = new Users();
-        if (!isset($_SESSION['update'])) {
+        if (!isset($_SESSION['update']) ) {
             $data['pass'] = password_hash($password, PASSWORD_DEFAULT);
             if (!$userDb->createUser($data)) {
                 $twigVariables['error'] = "Error al insertar el usuario en la base de datos";

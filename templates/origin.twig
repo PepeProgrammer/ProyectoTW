@@ -23,8 +23,11 @@
             {% if user is not defined %}
             <li><a href="./createUser.php">registrarse</a></li>
             {% endif %}
+
             {% if user.type is defined and user.type != 'client'%}
                 <li><a href="./users.php">Usuarios</a></li>
+            {% elseif user.type == 'client' %}
+                <li><a href="./profile.php">Perfil</a></li>
             {% endif %}
             {% if user.type == 'admin' %}
                 <li><a href="./db.php">Base datos</a></li>

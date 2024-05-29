@@ -48,9 +48,8 @@
 
                         <div class="inputs">
                             <label for="card">Número tarjeta de crédito:</label>
-                            <input type="text" id="card" name="card" value="{{ card }}" {{ confirmation }}>
+                            <input type="text" id="card" name="card" value="{{ card }}" {% if auto_update is not defined %}{{ confirmation }} {% endif %}>
                             <span class='error'>{{ card_error }}</span>
-
                         </div>
                     </div>
                 </div>
@@ -60,7 +59,7 @@
                     <div class="col">
                         <div class="inputs">
                             <label for="email">Email:</label>
-                            <input type="email" id="email" name="email" value="{{ email }}" {{ confirmation }}>
+                            <input type="email" id="email" name="email" value="{{ email }}" {% if auto_update is not defined %}{{ confirmation }} {% endif %}>
                             <span class='error'>{{ email_error }}</span>
                         </div>
                         {% if user.type == 'admin' %}
@@ -88,13 +87,13 @@
                         <div class="inputs">
                             <label for="password">Clave:</label>
                             <input type="password" id="password" name="password" placeholder="Escriba la clave"
-                                   value="{{ password }}" {{ confirmation }}>
+                                   value="{{ password }}" {% if auto_update is not defined %}{{ confirmation }} {% endif %}>
                         </div>
 
                         <div class="inputs">
                             <label for="password2">Repita la clave:</label>
                             <input type="password" id="password2" name="password2" placeholder="Escriba la misma clave"
-                                   value="{{ password2 }}" {{ confirmation }}>
+                                   value="{{ password2 }}" {% if auto_update is not defined %}{{ confirmation }} {% endif %}>
                             <span class='error'>{{ password_error }}</span>
                         </div>
                     </div>

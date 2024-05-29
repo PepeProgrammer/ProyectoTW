@@ -1,0 +1,20 @@
+{% extends 'origin.twig' %}
+
+    {% block style %}
+        {{ parent() }}
+        <link rel="stylesheet" href="../css/profile.css">
+    {% endblock %}
+
+    {% block main %}
+        <main>
+            <h1>Perfil del Usuario</h1>
+            <div class="user_data">
+                <p>Nombre: {{ user.name }}</p>
+                <p>Apellidos: {{ user.lastname }}</p>
+                <p>DNI: {{ user.dni }}</p>
+                <p>Correo: {{ user.email }}</p>
+                <p>Nº tarjeta: {{ user.card }}</p>
+            </div>
+            <button onclick="window.location.href='createUser.php?profile'">Modificar datos</button>
+        </main>
+    {% endblock %}
