@@ -15,6 +15,9 @@
                 <p>Correo: {{ user.email }}</p>
                 <p>Nº tarjeta: {{ user.card }}</p>
             </div>
+            {% if success is defined %}
+                <p class="success">{{ success }}</p>
+            {% endif %}
             <button onclick="window.location.href='createUser.php?profile'">Modificar datos</button>
         </main>
     {% endblock %}

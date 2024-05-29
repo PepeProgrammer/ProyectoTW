@@ -14,5 +14,9 @@ $twigVariables = [];
 $twigVariables['aside'] = $asideInfo->getAsideInfo();
 $twigVariables['user'] = $userDb->getUser($_SESSION['user']['id']);
 
+if(isset($_SESSION['success'])){
+    $twigVariables['success'] = $_SESSION['success'];
+    unset($_SESSION['success']);
 
+}
 echo $twig->render('profile.twig', $twigVariables);

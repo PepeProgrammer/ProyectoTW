@@ -70,8 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_SESSION['user']) && $_SESSION
 }
 
 
-
-if(isset($_GET['profile'])) {
+if (isset($_GET['profile'])) {
 
     $user = $userDb->getUser($_SESSION['user']['id']);
     $name = $user['name'];
@@ -236,7 +235,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $data['type'] = "client";
 
         $userDb = new Users();
-        if (!isset($_SESSION['update']) ) {
+        if (!isset($_SESSION['update'])) {
             $data['pass'] = password_hash($password, PASSWORD_DEFAULT);
             if (!$userDb->createUser($data)) {
                 $twigVariables['error'] = "Error al insertar el usuario en la base de datos";
@@ -271,7 +270,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $logs->insertLog("Usuario modificado. Id: " . $_SESSION['update']);
                 $_SESSION['success'] = "Usuario modificado correctamente";
                 unset($_SESSION['update']);
-                header('Location: users.php');
+                if ($_SESSION['user']['type'] !== 'client') {
+                    header('Location: users.php');
+                } else {
+                    header('Location: profile.php');
+                }
                 exit;
             }
         }
