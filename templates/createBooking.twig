@@ -1,0 +1,57 @@
+{% extends 'origin.twig' %}
+
+    {% block style %}
+        {{ parent() }}
+        <link rel="stylesheet" href="../css/createBooking.css">
+    {% endblock %}
+
+    {% block main %}
+        <main>
+            <h1>Reserva de habitación</h1>
+
+            <form action="../pages/createBooking.php" method="post" enctype="multipart/form-data" novalidate>
+                <div class="booking_data">
+                    <div class="inputs">
+                        <label for="people_num">Número de personas:</label>
+                        <input type="number" id="people_num" name="people_num" min="1" value="{{ people_num }}" {{ confirmation }}>
+                    </div>
+                    <div class="inputs">
+                        <label for="checkin">Día de entrada:</label>
+                        <input type="date" id="checkin" name="checkin" value="{{ checkin }}"  {{ confirmation }}>
+                        <span class='error'>{{ checkin_error }}</span>
+                    </div>
+                    <div class="inputs">
+                        <label for="checkout">Día de salida:</label>
+                        <input type="date" id="checkout" name="checkout" value="{{ checkout }}" {{ confirmation }}>
+                        <span class='error'>{{ checkout_error }}</span>
+                    </div>
+                    <div class="inputs">
+                        <label for="comments">Comentario:</label>
+                        <textarea id="comments" name="comments" rows="4" cols="50" {{ confirmation }}>{{ comments }}</textarea>
+                    </div>
+                </div>
+
+                <button type="submit" name="send" id="send" value="CONSULTAR">CONSULTAR</button>
+
+
+                {% if showFinding == true %}
+                    <h2>Resultados de la busqueda:</h2>
+                    <div class="room">
+                        <div class="room_img">
+                            <img src="../img/rooms/{{ room.room_num }}.jpg" alt="Habitación {{ room.room_num }}">
+                        </div>
+                        <div class="room_data">
+                            <p>Número de habitación: {{ room.room_num }}</p>
+                            <p>Capacidad: {{ room.capability }}</p>
+                            <p>{{ room.description }}</p>
+                        </div>
+                        <div class="inputs">
+                            <button type="submit" name="accept" id="accept" value="ACEPTAR">ACEPTAR</button>
+                            <button type="submit" name="decline" id="decline" value="RECHAZAR">RECHAZAR</button>
+                        </div>
+
+                    </div>
+                {% endif %}
+            </form>
+        </main>
+    {% endblock %}
