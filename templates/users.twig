@@ -1,0 +1,65 @@
+{% extends 'origin.twig' %}
+
+    {% block style %}
+        {{ parent() }}
+        <link rel="stylesheet" href="../css/users.css">
+    {% endblock %}
+
+    {% block script %}
+        {{ parent() }}
+        <script src="../js/users.js"></script>
+    {% endblock %}
+
+{% block main %}
+    <main>
+        <h2>Usuarios</h2>
+        {% if users|length > 0 %}
+        <div class="table_list">
+                <div class="element">
+                    <span class="border odd">Nombre</span>
+                    <span class="border odd">Apellido</span>
+                    <span class="border odd">DNI</span>
+                    <span class="border odd">correo</span>
+                    <span class="border odd">Nº tarjeta</span>
+                    <span class="border odd">tipo</span>
+                    <span class="border odd">Operaciones</span>
+                </div>
+
+                {% for user in users %}
+                    <div class="element">
+                        <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ user.name }}</span>
+                        <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ user.lastname }}</span>
+                        <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ user.dni }}</span>
+                        <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ user.email }}</span>
+                        <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ user.card }}</span>
+                        <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">
+                            {% if user.type == 'client' %}
+                                cliente
+                            {% elseif user.type == 'admin' %}
+                                administrador
+                            {% else %}
+                                recepcionista
+                            {% endif %}
+                        </span>
+                        <div class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">
+                            <a href="createUser.php?id={{ user.id }}">
+                                <img src="../images/edit.png" class="image_button" alt="icono para editar usuario"/>
+                            </a>
+                            <img src="../images/delete.png" class="image_button" alt="icono para borrar usuario" onclick="generateDeleteUserModal({{ user.id }},'{{user.email }}')"/>
+                        </div>
+                    </div>
+                {% endfor %}
+
+
+        </div>
+        {% else %}
+            <p class="empty">Actualmente no hay usuarios registrados</p>
+        {% endif %}
+        {% if message is defined %}
+            <p class="success">{{ message }}</p>
+        {% endif %}
+        <button onclick="window.location.href='createUser.php'">Crear usuario</button>
+
+    </main>
+
+{% endblock %}

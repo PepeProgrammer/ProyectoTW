@@ -5,6 +5,8 @@ h2 {
     display: flex;
     flex-direction: column;
     padding: 15px;
+    max-height: 630px;
+    overflow-y: auto;
 
 }
 
@@ -39,5 +41,7 @@ h2 {
 .table_list div:nth-child(1) {
     border-bottom: 4px solid black;
 }
+
+
 
 

@@ -14,17 +14,36 @@
 <body>
 <header>
     <img src="../images/logo.png" alt="logo del hotel" class="logo">
-    <nav>
-        <ul>
-            <li><a href="./index.php">Inicio</a></li>
-            <li><a href="./habitaciones.php">Habitaciones</a></li>
-            <li><a href="./servicios.php">Servicios</a></li>
-            <li><a href="./createBooking.php">Reservas</a></li>
-            <li><a href="./createUser.php">registrarse</a></li>
-        </ul>
-    </nav>
-    <a href="#"><img src="../images/login.png" class="login_logo"></a>
+    <h1 class="title">Kiano Hotel</h1>
+    {% if user is not defined %}
+        <a href="login.php"><img src="../images/login.png" class="login_logo"></a>
+    {% else %}
+        <a href="logout.php"><img src="../images/logout.png" class="login_logo"></a>
+    {% endif %}
+
 </header>
+<nav>
+    <ul>
+        <li><a href="./index.php">Inicio</a></li>
+        <li><a href="./habitaciones.php">Habitaciones</a></li>
+        <li><a href="./servicios.php">Servicios</a></li>
+        <li><a href="./reservas.php">Reservas</a></li>
+        {% if user is not defined %}
+            <li><a href="./createUser.php">registrarse</a></li>
+        {% endif %}
+
+        {% if user.type is defined and user.type != 'client'%}
+            <li><a href="./users.php">Usuarios</a></li>
+        {% elseif user.type == 'client' %}
+            <li><a href="./profile.php">Perfil</a></li>
+        {% endif %}
+        {% if user.type == 'admin' %}
+            <li><a href="./db.php">Base datos</a></li>
+            <li><a href="./logs.php">Logs</a></li>
+        {% endif %}
+
+    </ul>
+</nav>
 <div class="content">
     {% block main %}
 
@@ -34,7 +53,7 @@
         <h3>Información sobre el hotel</h3>
         <ul>
             <li><span class="info">{{ aside.rooms ? aside.rooms : 0 }}</span> habitaciones en el hotel</li>
-            <li><span class="info">{{ aside.freeroms ? aside.freeroms : 0}}</span> habitaciones libres</li>
+            <li><span class="info">{{ aside.freeroms ? aside.freeroms : 0 }}</span> habitaciones libres</li>
             <li><span class="info">{{ aside.max ? aside.max : 0 }}</span> personas máximo</li>
             <li><span class="info">{{ aside.hosted ? aside.hosted : 0 }}</span> personas alojadas</li>
         </ul>

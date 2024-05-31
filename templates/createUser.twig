@@ -7,12 +7,12 @@
 
     {% block main %}
         <main>
-            <h1>Registro de usuarios</h1>
-            {%  if error is defined %}
+            <h1>{{ title }}</h1>
+            {% if error is defined %}
                 <div class="error">
                     <p>{{ error }}</p>
                 </div>
-                {% elseif correct_text is defined %}
+            {% elseif correct_text is defined %}
                 <div class="success">
                     <p>{{ correct_text }}</p>
                 </div>
@@ -48,9 +48,8 @@
 
                         <div class="inputs">
                             <label for="card">Número tarjeta de crédito:</label>
-                            <input type="text" id="card" name="card" value="{{ card }}" {{ confirmation }}>
+                            <input type="text" id="card" name="card" value="{{ card }}" {% if auto_update is not defined %}{{ confirmation }} {% endif %}>
                             <span class='error'>{{ card_error }}</span>
-
                         </div>
                     </div>
                 </div>
@@ -60,20 +59,41 @@
                     <div class="col">
                         <div class="inputs">
                             <label for="email">Email:</label>
-                            <input type="email" id="email" name="email" value="{{ email }}" {{ confirmation }}>
+                            <input type="email" id="email" name="email" value="{{ email }}" {% if auto_update is not defined %}{{ confirmation }} {% endif %}>
                             <span class='error'>{{ email_error }}</span>
                         </div>
+                        {% if user.type == 'admin' %}
+                            <div class="inputs">
+                                <label for="email">Tipo:</label>
+                                <select name="type" id="type" {% if confirmation == 'readonly' %} disabled {% endif %}>
+                                    <option value="client" {% if type == 'client' %} selected {% endif %}>Cliente
+                                    </option>
+                                    <option value="recepcionist" {% if type == 'recepcionist' %} selected {% endif %}>
+                                        Recepcionista
+                                    </option>
+                                    <option value="admin" {% if type == 'admin' %} selected {% endif %}>Administrador
+                                    </option>
+                                </select>
+                                <span class='error'>{{ type_error }}</span>
+                            </div>
+                        {% endif %}
+
+                        {% if type_hidden is defined %}
+                            <input type='hidden' name='type' value='{{ type_hidden }}'>
+                        {% endif %}
                     </div>
 
                     <div class="col">
                         <div class="inputs">
                             <label for="password">Clave:</label>
-                            <input type="password" id="password" name="password" placeholder="Escriba la clave" value="{{ password }}" {{ confirmation }}>
+                            <input type="password" id="password" name="password" placeholder="Escriba la clave"
+                                   value="{{ password }}" {% if auto_update is not defined %}{{ confirmation }} {% endif %}>
                         </div>
 
                         <div class="inputs">
                             <label for="password2">Repita la clave:</label>
-                            <input type="password" id="password2" name="password2" placeholder="Escriba la misma clave" value="{{ password2 }}" {{ confirmation }}>
+                            <input type="password" id="password2" name="password2" placeholder="Escriba la misma clave"
+                                   value="{{ password2 }}" {% if auto_update is not defined %}{{ confirmation }} {% endif %}>
                             <span class='error'>{{ password_error }}</span>
                         </div>
                     </div>

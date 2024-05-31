@@ -4,12 +4,21 @@ require_once "../models/AsideInfo.php";
 require_once "../models/Backup.php";
 session_start();
 
+if(!isset($_SESSION['user']) || $_SESSION['user']['type'] !== 'admin') {
+    header('Location: index.php');
+    exit();
+}
+
 $loader = new \Twig\Loader\FilesystemLoader('../templates');
 $twig = new \Twig\Environment($loader);
 
 
 $asideInfo = new AsideInfo();
 $twigVariables = [];
+
+$twigVariables['user'] = $_SESSION['user'];
+
+
 $twigVariables['aside'] = $asideInfo->getAsideInfo();
 
 
