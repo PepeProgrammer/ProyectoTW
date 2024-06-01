@@ -19,3 +19,21 @@ function generateDeleteUserModal(id, email) {
 function deleteModal() {
     $('.modal').remove();
 }
+
+function generateDeleteModal(message, url, buttonName, buttonText) {
+    console.log("hola");
+    modal = `
+    <div class="modal">
+        <div class="modal_content">
+            <p>${message}</p>
+                <form action="${url}" method="post" novalidate>
+                    <button class="danger" type="submit" name="${buttonName}">${buttonText}</button>
+                    <button onclick="deleteModal()">Cancelar</button>
+                </form>
+        </div>
+    </div>
+
+`
+    $('body').append(modal);
+
+}

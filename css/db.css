@@ -37,6 +37,11 @@ form button {
     margin-top: 10px ;
 }
 
+button {
+    margin-top: 10px;
+    align-self: center;
+}
+
 input[type="file"] {
     border: 1px solid black;
     width: max-content;

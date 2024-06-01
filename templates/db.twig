@@ -5,6 +5,11 @@
         <link rel="stylesheet" href="../css/db.css">
     {% endblock %}
 
+    {% block script %}
+        {{ parent() }}
+        <script src="../js/modal.js"></script>
+    {% endblock %}
+
     {% block main %}
         <main>
             <h2>Gestión base de datos</h2>
@@ -25,9 +30,11 @@
                 </li>
                 <li>
                     <span>Reiniciar base de datos</span>
-                    <form action="db.php" method="post" novalidate>
-                        <button class="danger" name="delete" type="submit">Reiniciar</button>
-                    </form>
+{#                    <form action="db.php" method="post" novalidate>#}
+{#                        <button class="danger" name="delete" type="submit">Reiniciar</button>#}
+                        <button class="danger" name="delete"
+                                onclick="generateDeleteModal('¿Estás segudo de eliminar la base de datos?', 'db.php', 'delete', 'Eliminar BBDD')">Reiniciar</button>
+{#                    </form>#}
                 </li>
             </ul>
             <p class="confirmation_message">{{ message }}</p>
