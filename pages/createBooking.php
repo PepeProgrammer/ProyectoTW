@@ -35,8 +35,7 @@ if (!isset($_SESSION['user']) or ($_SESSION['user']['type'] === "admin")) {
     $twigVariables['user'] = $_SESSION['user'];
 }
 
-//if ($_SESSION['user']['type'] === "recepcionist") {
-if ($_SESSION['user']['type'] === "client") {
+if ($_SESSION['user']['type'] === "recepcionist") {
     $twigVariables['recepcionist_view'] = true;
     $userDb = new Users();
     $twigVariables['users'] = $userDb->getUsers();
