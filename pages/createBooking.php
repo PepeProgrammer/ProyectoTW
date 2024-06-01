@@ -4,6 +4,10 @@ require_once "../vendor/autoload.php";
 require_once "../models/AsideInfo.php";
 require_once "../models/Booking.php";
 require_once "../models/Rooms.php";
+require_once "../models/Users.php";
+
+session_start();
+
 
 $loader = new \Twig\Loader\FilesystemLoader('../templates');
 $twig = new \Twig\Environment($loader);
@@ -16,24 +20,48 @@ $twigVariables['checkin'] = "";
 $twigVariables['checkout'] = "";
 $twigVariables['checkin_error'] = ""; // el dia de entrada no puede ser anterior al actual
 $twigVariables['checkout_error'] = ""; // el dia de salida no puede ser anterior al de entrada
-$twigVariables['error'] = "Si ves esto, algo ha ido mal";
+$twigVariables['error'] = "";
 $correct = false;
 $twigVariables['showFinding'] = false;
 $twigVariables['confirmation'] = "";
+$twigVariables['success'] = "";
+$twigVariables['recepcionistView'] = false;
+
+
+if (!isset($_SESSION['user']) or ($_SESSION['user']['type'] === "admin")) {
+    header("Location: index.php");
+    exit;
+} else {
+    $twigVariables['user'] = $_SESSION['user'];
+}
+
+//if ($_SESSION['user']['type'] === "recepcionist") {
+if ($_SESSION['user']['type'] === "client") {
+    $twigVariables['recepcionist_view'] = true;
+    $userDb = new Users();
+    $twigVariables['users'] = $userDb->getUsers();
+    if (isset($_POST['user_id'])) {
+        $userid_bd = $_POST['user_id'];
+    }
+} else {
+    $userid_bd = $_SESSION['user']['id'];
+}
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['accept'])) {
-
-        // comprobar que sigue existiendo la habitación y no se ha reservado ya
-
-        // insertar en la base de datos la reserva
-
-
         $booking = new Booking();
-        $booking->confirmBooking($_POST['booking_id']);
-        echo "Has pulsado el botón ACEPTAR";
-    } else if (isset($_POST['decline'])) {
+        if( $booking->confirmBooking($_POST['booking_id']) ) {
+            $twigVariables['confirmation'] = "readonly";
+            $twigVariables['success'] = "Reserva realizada correctamente";
+        } else {
+            $twigVariables['error'] = "Disculpe, no se ha podido realizar la reserva";
+        }
+    }
+
+    if (isset($_POST['decline'])) {
+        $booking = new Booking();
+        $booking->deleteBooking($_POST['booking_id']);
         header("Location: index.php");
         exit;
 
@@ -89,7 +117,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($correct) {
         $twigVariables['confirmation'] = "readonly";
-        $twigVariables['showFinding'] = true;
         // buscamos en la base de datos
 
         $roomDb = new Rooms();
@@ -104,9 +131,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         } else {
             $twigVariables['room'] = $room;
-            $booking = new Booking();
-            $booking->createBooking([
-                'user_id' => 1, // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            $bookingdb = new Booking();
+            $booking_id = $bookingdb->createBooking([
+                'user_id' => $userid_bd,
                 'room_id' => $twigVariables['room']['id'],
                 'people_num' => $twigVariables['people_num'],
                 'comments' => $twigVariables['comments'],
@@ -115,12 +142,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 'state' => 'pending',
                 'timestamp' => date("Y-m-d H:i:s")
             ]);
-            $twigVariables['booking_id'] = $booking;
+            $twigVariables['booking_id'] = $booking_id;
+            $twigVariables['showFinding'] = true;
+            $roomImages = $roomDb->getRoomImages($room['id']);
+            $twigVariables['roomImages'] = $roomImages;
         }
     }
 
 
 }
 
-var_dump($twigVariables['room']);
 echo $twig->render('createBooking.twig', $twigVariables);

@@ -49,4 +49,23 @@ class Rooms
         $room = $result->fetch_assoc();
         return $room;
     }
+
+    public function getRoomImages($roomId)
+    {
+        $sql = "SELECT images.* FROM images
+            INNER JOIN room_img ON images.id = room_img.img_id
+            WHERE room_img.room_id = ?";
+
+        $prepare = $this->db->prepare($sql);
+        $prepare->bind_param("i", $roomId);
+        $prepare->execute();
+        $result = $prepare->get_result();
+
+        $images = [];
+        while ($row = $result->fetch_assoc()) {
+            $images[] = $row;
+        }
+
+        return $images;
+    }
 }

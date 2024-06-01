@@ -1,0 +1,99 @@
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    display: flex;
+    justify-content: center;
+}
+
+.booking_data {
+    display: flex;
+    background-color: #dddda7;
+    padding: 15px 10% 0 10%;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    width: 50%;
+}
+
+.booking_extradata {
+    display: flex;
+    flex-direction: column;
+    background-color: #dddda7;
+    margin-bottom: 20px;
+    padding: 0 0 15px 0;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    width: 70%;
+}
+.inputs {
+    margin-right: 10px;
+}
+
+.booking_extradata .inputs {
+    display: flex;
+    flex-direction: column;
+}
+
+.booking_extradata .inputs label {
+    margin-top: 15px;
+}
+
+label {
+    align-self: center;
+}
+
+#people_num {
+    width: 40px;
+}
+
+p {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+}
+
+.room {
+    background-color: #dddda7;
+    width: 70%;
+    padding: 10px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+h2 {
+    display: flex;
+    justify-content: center;
+    background-color: #dddda7;
+    width: 70%;
+    padding: 10px;
+    margin-bottom: 0;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.final_buttons:last-child {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#accept {
+    background-color: #889a15;
+    color: #e6e6ba;
+}
+#decline {
+    background-color: #957878;
+    color: #e6e6ba;
+}
+
+#send {
+    margin-bottom: 20px;
+}
+
+.margin {
+    margin: 0 10%;
+}
+
+

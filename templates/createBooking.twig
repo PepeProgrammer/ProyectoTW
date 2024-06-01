@@ -25,10 +25,24 @@
                         <input type="date" id="checkout" name="checkout" value="{{ checkout }}" {{ confirmation }}>
                         <span class='error'>{{ checkout_error }}</span>
                     </div>
-                    <div class="inputs">
+                </div>
+
+                <div class="booking_extradata">
+                    <div class="inputs margin">
                         <label for="comments">Comentario:</label>
                         <textarea id="comments" name="comments" rows="4" cols="50" {{ confirmation }}>{{ comments }}</textarea>
                     </div>
+
+                    {% if recepcionist_view %}
+                        <div class="inputs margin">
+                            <label for="user_id">Cliente:</label>
+                            <select id="user_id" name="user_id">
+                                {% for user in users %}
+                                    <option value="{{ user.id }}">Usuario: {{ user.name }} | Email: {{ user.email }} </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    {% endif %}
                 </div>
 
                 <button type="submit" name="send" id="send" value="CONSULTAR">CONSULTAR</button>
@@ -38,20 +52,25 @@
                     <h2>Resultados de la busqueda:</h2>
                     <div class="room">
                         <div class="room_img">
-                            <img src="../img/rooms/{{ room.room_num }}.jpg" alt="Habitación {{ room.room_num }}">
+                            {% for image in roomImages %}
+                                <img src="{{ image.image }}" alt="room_image">
+                            {% endfor %}
                         </div>
                         <div class="room_data">
                             <p>Número de habitación: {{ room.room_num }}</p>
                             <p>Capacidad: {{ room.capability }}</p>
                             <p>{{ room.description }}</p>
                         </div>
-                        <div class="inputs">
+                        <input type="hidden" name="booking_id" value="{{ booking_id }}">
+                        <div class="final_buttons">
                             <button type="submit" name="accept" id="accept" value="ACEPTAR">ACEPTAR</button>
                             <button type="submit" name="decline" id="decline" value="RECHAZAR">RECHAZAR</button>
                         </div>
-
                     </div>
+
                 {% endif %}
+                <span class='success'>{{ success }}</span>
+                <span class='error'>{{ error }}</span>
             </form>
         </main>
     {% endblock %}
