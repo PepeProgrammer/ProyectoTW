@@ -73,7 +73,7 @@ class Backup
     }
 
     // Borra todas las tuplas de todas las tablas
-    public function delete()
+    public function delete($id)
     {
         $this->db->query('SET FOREIGN_KEY_CHECKS=0');
         // Obtener listado de tablas
@@ -81,7 +81,11 @@ class Backup
         $tablas = $result->fetch_all(MYSQLI_NUM);
         // Borrar cada tabla
         foreach ($tablas as $tab)
-            $this->db->query('DELETE FROM ' . $tab[0]);
+            if($tab[0] !== 'users'){
+                $this->db->query('DELETE FROM ' . $tab[0]);
+            } else {
+                $this->db->query('DELETE FROM ' . $tab[0] . ' WHERE id != ' . $id); //No se borra al administrador que decida borrar la base de datos
+            }
         $this->db->query('SET FOREIGN_KEY_CHECKS=1');
     }
 
