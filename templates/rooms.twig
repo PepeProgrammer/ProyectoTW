@@ -1,0 +1,58 @@
+{% extends 'origin.twig' %}
+
+ {% block style %}
+     {{ parent() }}
+     <link rel="stylesheet" href="../css/users.css">
+ {% endblock %}
+
+    {% block script %}
+        {{ parent() }}
+        <script src="../js/modal.js"></script>
+    {% endblock %}
+
+{% block main %}
+    <main>
+        <h1>Lista habitaciones</h1>
+        {% if rooms|length > 0 %}
+            <div class="table_list three_items">
+                <div class="element">
+                    <span class="border odd">Número</span>
+                    <span class="border odd">Precio noche</span>
+                    <span class="border odd">Capacidad</span>
+                </div>
+
+                {% for room in rooms %}
+                    <div class="element">
+                        <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ room.room_num }}</span>
+                        <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ room.price }}€</span>
+                        <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ room.capacity }}</span>
+
+                        <div class="container_three {{ loop.index % 2 == 0 ? 'odd' : 'even' }}">
+                            <h2>Fotos de la habitación</h2>
+                            <div class="images ">
+{#                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1slszAK8Ie7L6Lo9_p6DHQrnqn2oLKUkffg&s"/>#}
+{#                                <img src="https://www.oyster.com/wp-content/uploads/sites/35/2019/05/bijoux-room-v18411999-1440.jpg"/>#}
+{#                                <img src="https://pix8.agoda.net/hotelImages/124/1246280/1246280_16061017110043391702.jpg?ca=6&ce=1&s=1024x768"/>#}
+                                {% for image in room.images %}
+                                    <img src="data:image/jpeg;base64,{{ image.image }}" alt="imagen de la habitación">
+                                {% endfor %}
+                            </div>
+                            <h2>Descripción</h2>
+                            <p>{{ room.description }}</p>
+                        </div>
+{#                        <div class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">#}
+{#                            <a href="createUser.php?id={{ user.id }}">#}
+{#                                <img src="../images/edit.png" class="image_button" alt="icono para editar usuario"/>#}
+{#                            </a>#}
+{#                            <img src="../images/delete.png" class="image_button" alt="icono para borrar usuario" onclick="generateDeleteUserModal({{ user.id }},'{{user.email }}')"/>#}
+{#                        </div>#}
+                    </div>
+                {% endfor %}
+
+
+            </div>
+        {% else %}
+            <p class="empty">Actualmente no hay usuarios registrados</p>
+        {% endif %}
+    </main>
+{% endblock %}

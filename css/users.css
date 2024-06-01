@@ -15,13 +15,33 @@ span {
     overflow-y: auto;
 }
 
+.three_items {
+    grid-template-columns: repeat(3, auto);
+}
 
+.container_three {
+    grid-column: span 3;
+    display: flex;
+    flex-direction: column;
+}
+
+.container_three p {
+    text-align: center;
+}
+
+.container_three h2:last-of-type {
+    margin-bottom: 0;
+}
+
+.four_items {
+    grid-template-columns: repeat(4, auto);
+}
 .odd {
     background: #e6e6ba;
 }
 
 .even {
-    background: #A5844F;
+    background: #cdaa77;
 }
 
 .border {
@@ -34,7 +54,9 @@ span {
 }
 
 .element span {
+    display: inline;
     padding: 10px;
+    text-align: center;
 }
 
 .element:first-child {
@@ -58,7 +80,7 @@ span {
 }
 
 
-.element div *:first-child {
+.element .buttons:first-child {
     margin-right: 10px;
 }
 main {
@@ -69,6 +91,19 @@ main {
 button {
     margin-top: 10px;
     align-self: center;
+}
+
+.images {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.images img {
+    width: 300px;
+    padding: 10px;
+    border-radius: 15px;
 }
 
 

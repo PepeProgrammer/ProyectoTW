@@ -42,14 +42,6 @@ button {
     align-self: center;
 }
 
-input[type="file"] {
-    border: 1px solid black;
-    width: max-content;
-    padding: 20px;
-    border-radius: 15px;
-    background: #dddda7;
-}
-
 .confirmation_message {
     text-align: center;
     color: #4d85ea;

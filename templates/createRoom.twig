@@ -1,0 +1,39 @@
+{% extends 'origin.twig' %}
+
+{% block style %}
+    {{ parent() }}
+    <link rel="stylesheet" href="../css/createRoom.css">
+{% endblock %}
+
+{% block main %}
+    <main>
+        <h1>Crear habitación</h1>
+        <form action="createRoom.php" method="post" class="form" enctype="multipart/form-data" novalidate>
+            <label for="number">Número de habitación</label>
+            <input type="text" name="number" id="number" value="{{ number }}" {{ readonly }}>
+            <span class="error">{{ number_error }}</span>
+
+            <label for="price">Precio por noche</label>
+            <input type="number" name="price" id="price" value="{{ price }}" {{ readonly }}>
+            <span class="error">{{ price_error }}</span>
+
+            <label for="capacity">Capacidad</label>
+            <input type="number" name="capacity" id="capacity" value="{{ capacity }}" {{ readonly }}>
+            <span class="error">{{ capacity_error }}</span>
+
+            <label for="description">Descripción</label>
+            <textarea name="description" id="description" cols="35"
+                      rows="10" {{ readonly }}>{{ description }}</textarea>
+            <span class="error">{{ description_error }}</span>
+
+            {% if checked == false %}
+                <button type="submit" name="check">Validar datos</button>
+            {% else %}
+                <label for="images">Imágenes</label>
+                <input type="file" name="images[]" id="images" accept="image/*" multiple>
+                <span class="success">{{ success }}</span>
+                <button type="submit" name="create">Crear Habitación</button>
+            {% endif %}
+        </form>
+    </main>
+{% endblock %}
