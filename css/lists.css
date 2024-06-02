@@ -21,11 +21,16 @@ span {
 
 .container_three {
     grid-column: span 3;
-    display: flex;
-    flex-direction: column;
+
 }
 
-.container_three p {
+div.container{
+    display: none;
+    flex-direction: column;
+
+}
+
+.container p {
     text-align: center;
 }
 
@@ -74,13 +79,13 @@ span {
     cursor: pointer;
 }
 
-.element div {
+.operations {
     display: flex;
     justify-content: center;
 }
 
 
-.element .buttons:first-child {
+.element .operations:first-child {
     margin-right: 10px;
 }
 main {
@@ -98,12 +103,15 @@ button {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    ;
 }
 
 .images img {
     width: 300px;
     padding: 10px;
     border-radius: 15px;
+    height: fit-content;
+    align-self: flex-end;
 }
 
 

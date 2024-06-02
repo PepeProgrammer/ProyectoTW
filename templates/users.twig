@@ -2,7 +2,7 @@
 
     {% block style %}
         {{ parent() }}
-        <link rel="stylesheet" href="../css/users.css">
+        <link rel="stylesheet" href="../css/lists.css">
     {% endblock %}
 
     {% block script %}
@@ -41,7 +41,7 @@
                                 recepcionista
                             {% endif %}
                         </span>
-                        <div class="buttons {{ loop.index % 2 == 0 ? 'odd' : 'even' }}">
+                        <div class="operations {{ loop.index % 2 == 0 ? 'odd' : 'even' }}">
                             <a href="createUser.php?id={{ user.id }}">
                                 <img src="../images/edit.png" class="image_button" alt="icono para editar usuario"/>
                             </a>

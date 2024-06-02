@@ -37,3 +37,9 @@ function generateDeleteModal(message, url, buttonName, buttonText) {
     $('body').append(modal);
 
 }
+
+
+function detailsWindow(id) {
+    $('.container').hide();
+    $(`#${id}`).show();
+}

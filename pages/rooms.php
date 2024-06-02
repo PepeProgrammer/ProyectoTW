@@ -13,6 +13,11 @@ $roomDb = new Room();
 $twigVariables = [];
 $twigVariables['aside'] = $asideInfo->getAsideInfo();
 
+
+if(isset($_SESSION['user'])) {
+    $twigVariables['user'] = $_SESSION['user'];
+
+}
 $twigVariables['rooms'] = $roomDb->getRooms();
 foreach ($twigVariables['rooms'] as $key => $room) {
     $twigVariables['rooms'][$key]['images'] = $roomDb->getRoomImages($room['id']);

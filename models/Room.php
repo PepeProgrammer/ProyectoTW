@@ -52,7 +52,7 @@ class Room
 
     public function getRooms()
     {
-        $prepare = $this->db->prepare("SELECT * FROM rooms ");
+        $prepare = $this->db->prepare("SELECT * FROM rooms ORDER BY capacity ASC ");
         $prepare->execute();
         return $prepare->get_result()->fetch_all(MYSQLI_ASSOC);
     }
