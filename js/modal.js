@@ -43,7 +43,7 @@ function generateDeleteModal(message, url, buttonName, buttonText, id = -1) {
 
 function detailsWindow(id) {
     /*Se ha creado este timeout porque se daba el caso que cuando se hacía click en el
-    boton de detalles de una habitación, se abría el modal antes de cambiarse de página y así lo evitamos,
+    botón de detalles de una habitación, se abría los detalles de la habitación antes de cambiarse de página y así lo evitamos,
     El tiempo del timeout es lo suficientemente breve como para que no se note en la página*/
     setTimeout( () => {
         if($('.modal').length === 0) { // Si no hay un modal abierto se abre la información de la habitación
@@ -53,5 +53,3 @@ function detailsWindow(id) {
     },50);
 
 }
-
-
