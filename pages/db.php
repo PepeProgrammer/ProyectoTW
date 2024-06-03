@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
 
         if (isset($_POST['delete'])) {
-            $backup->delete();
+            $backup->delete($_SESSION['user']['id']);
             $_SESSION['message'] = 'Datos eliminados correctamente';
         } elseif (isset($_POST['restore']) && is_uploaded_file($_FILES['sql']['tmp_name'])) {
             $backup->restore(@file_get_contents($_FILES['sql']['tmp_name']));

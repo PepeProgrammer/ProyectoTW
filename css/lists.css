@@ -1,0 +1,142 @@
+h2, h1 {
+    text-align: center;
+}
+
+span {
+    display: flex;
+    align-self: center;
+}
+
+.table_list {
+    display: grid;
+    grid-template-columns: repeat(7, auto);
+    padding: 15px;
+    max-height: 630px;
+
+}
+
+.three_items {
+    grid-template-columns: repeat(3, auto);
+}
+.four_items {
+    grid-template-columns: repeat(4, auto);
+}
+.container_three {
+    grid-column: span 3;
+
+}
+
+.container_four {
+grid-column: span 4;
+}
+.container_seven {
+    grid-column: span 7;
+}
+
+div.container{
+    display: none;
+    flex-direction: column;
+
+}
+
+.container  p {
+    text-align: center;
+}
+
+.container_three h2:last-of-type {
+    margin-bottom: 0;
+}
+
+.four_items {
+    grid-template-columns: repeat(4, auto);
+}
+.seven_items {
+    grid-template-columns: repeat(7, auto);
+}
+.odd {
+    background: #e6e6ba;
+}
+
+.even {
+    background: #cdaa77;
+}
+
+.border {
+    border-bottom: 4px solid black;
+    font-weight: bold;
+}
+
+.element {
+    display: contents;
+
+}
+
+.element span {
+    display: inline;
+    padding: 10px;
+    text-align: center;
+}
+
+
+
+.empty {
+    text-align: center;
+    font-size: 20px;
+    color: #4d85ea;
+}
+
+.image_button {
+    width: 35px;
+    cursor: pointer;
+}
+
+.operations {
+    display: flex;
+    justify-content: center;
+}
+
+
+.element .operations:first-child {
+    margin-right: 10px;
+}
+main {
+    display: flex;
+    flex-direction: column;
+
+}
+button {
+    margin-top: 10px;
+    align-self: center;
+}
+
+.images {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    ;
+}
+
+.images img {
+    width: 300px;
+    padding: 10px;
+    border-radius: 15px;
+    height: fit-content;
+    align-self: flex-end;
+}
+
+.items {
+    display: grid;
+    overflow-y: auto;
+}
+
+.items:hover {
+    cursor: pointer;
+}
+
+
+
+
+
+
+

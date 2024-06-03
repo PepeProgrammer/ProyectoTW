@@ -2,12 +2,12 @@
 
     {% block style %}
         {{ parent() }}
-        <link rel="stylesheet" href="../css/users.css">
+        <link rel="stylesheet" href="../css/lists.css">
     {% endblock %}
 
     {% block script %}
         {{ parent() }}
-        <script src="../js/users.js"></script>
+        <script src="../js/modal.js"></script>
     {% endblock %}
 
 {% block main %}
@@ -24,7 +24,7 @@
                     <span class="border odd">tipo</span>
                     <span class="border odd">Operaciones</span>
                 </div>
-
+            <div class="items seven_items container_seven">
                 {% for user in users %}
                     <div class="element">
                         <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ user.name }}</span>
@@ -41,7 +41,7 @@
                                 recepcionista
                             {% endif %}
                         </span>
-                        <div class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">
+                        <div class="operations {{ loop.index % 2 == 0 ? 'odd' : 'even' }}">
                             <a href="createUser.php?id={{ user.id }}">
                                 <img src="../images/edit.png" class="image_button" alt="icono para editar usuario"/>
                             </a>
@@ -49,6 +49,8 @@
                         </div>
                     </div>
                 {% endfor %}
+            </div>
+
 
 
         </div>

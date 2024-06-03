@@ -27,7 +27,7 @@ class AsideInfo
     }
 
     private function getMaxPeople() {
-        $prepare = $this->db->prepare("SELECT SUM(capability) FROM rooms");
+        $prepare = $this->db->prepare("SELECT SUM(capacity) FROM rooms");
         $prepare->execute();
         $num = $prepare->get_result()->fetch_all();
         return $num[0][0];
