@@ -59,7 +59,7 @@ CREATE TABLE `images` (
 CREATE TABLE `rooms` (
   `id` int(11) NOT NULL,
   `room_num` tinytext NOT NULL,
-  `capability` int(11) NOT NULL,
+  `capacity` int(11) NOT NULL,
   `description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

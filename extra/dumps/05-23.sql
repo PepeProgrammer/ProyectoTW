@@ -45,7 +45,7 @@ DROP TABLE IF EXISTS rooms;
 CREATE TABLE `rooms` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `room_num` tinytext NOT NULL,
-  `capability` int(11) NOT NULL,
+  `capacity` int(11) NOT NULL,
   `description` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

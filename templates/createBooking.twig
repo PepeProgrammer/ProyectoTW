@@ -53,12 +53,12 @@
                     <div class="room">
                         <div class="room_img">
                             {% for image in roomImages %}
-                                <img src="{{ image.image }}" alt="room_image">
+                                <img src="data:image/jpeg;base64,{{ image.image }}" alt="room_image">
                             {% endfor %}
                         </div>
                         <div class="room_data">
                             <p>Número de habitación: {{ room.room_num }}</p>
-                            <p>Capacidad: {{ room.capability }}</p>
+                            <p>Capacidad: {{ room.capacity }}</p>
                             <p>{{ room.description }}</p>
                         </div>
                         <input type="hidden" name="booking_id" value="{{ booking_id }}">

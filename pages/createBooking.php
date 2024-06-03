@@ -3,7 +3,7 @@
 require_once "../vendor/autoload.php";
 require_once "../models/AsideInfo.php";
 require_once "../models/Booking.php";
-require_once "../models/Rooms.php";
+require_once "../models/Room.php";
 require_once "../models/Users.php";
 
 session_start();
@@ -118,7 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $twigVariables['confirmation'] = "readonly";
         // buscamos en la base de datos
 
-        $roomDb = new Rooms();
+        $roomDb = new Room();
         $room = $roomDb->getRoom($twigVariables['people_num'], $twigVariables['checkin'], $twigVariables['checkout']);
 
         if ($room === null) {

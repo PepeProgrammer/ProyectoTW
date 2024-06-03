@@ -88,7 +88,7 @@ INSERT INTO `logs` (`id`, `time`, `description`) VALUES
 CREATE TABLE `rooms` (
   `id` int(11) NOT NULL,
   `room_num` tinytext NOT NULL,
-  `capability` int(11) NOT NULL,
+  `capacity` int(11) NOT NULL,
   `description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -96,7 +96,7 @@ CREATE TABLE `rooms` (
 -- Volcado de datos para la tabla `rooms`
 --
 
-INSERT INTO `rooms` (`id`, `room_num`, `capability`, `description`) VALUES
+INSERT INTO `rooms` (`id`, `room_num`, `capacity`, `description`) VALUES
 (1, '101', 3, 'Habitación de tres presonas'),
 (2, '102', 2, 'Habitación de 2 personas');
 
