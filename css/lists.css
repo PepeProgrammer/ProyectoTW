@@ -117,7 +117,7 @@ button {
     ;
 }
 
-.images img {
+.images img:not(.image_button) {
     width: 300px;
     padding: 10px;
     border-radius: 15px;

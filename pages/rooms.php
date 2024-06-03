@@ -31,4 +31,9 @@ $twigVariables['rooms'] = $roomDb->getRooms();
 foreach ($twigVariables['rooms'] as $key => $room) {
     $twigVariables['rooms'][$key]['images'] = $roomDb->getRoomImages($room['id']);
 }
+
+if(isset($_SESSION['success'])) {
+    $twigVariables['success'] = $_SESSION['success'];
+    unset($_SESSION['success']);
+}
 echo $twig->render('rooms.twig', $twigVariables);

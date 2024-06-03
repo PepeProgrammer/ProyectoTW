@@ -7,7 +7,7 @@
 
     {% block script %}
         {{ parent() }}
-        <script src="../js/modal.js"></script>
+        <script src="../js/utils.js"></script>
     {% endblock %}
 
 {% block main %}
@@ -38,7 +38,7 @@
                                         <img src="../images/edit.png" class="image_button"
                                              alt="icono para editar habitacion"/>
                                     </a>
-                                    <img src="../images/delete.png" class="image_button" alt="icono para borrar habitacion"
+                                    <img src="../images/delete.png" class="image_button" alt="icono para borrar habitación"
                                          onclick="generateDeleteModal('¿Desea eliminar la habitación {{ room.room_num }}?','rooms.php', 'delete', 'Eliminar', {{ room.id }})"/>
                                 </div>
                             {% endif %}

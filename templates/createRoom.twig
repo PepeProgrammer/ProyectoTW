@@ -3,12 +3,19 @@
 {% block style %}
     {{ parent() }}
     <link rel="stylesheet" href="../css/createRoom.css">
+    <link rel="stylesheet" href="../css/lists.css">
 {% endblock %}
 
+{% block script %}
+    {{ parent() }}
+    <script src="../js/utils.js"></script>
+{% endblock %}
 {% block main %}
     <main>
         <h1>Crear habitación</h1>
-        <form action="createRoom.php" method="post" class="form" enctype="multipart/form-data" novalidate>
+
+        <form id="room_form" action="createRoom.php" method="post" class="form" enctype="multipart/form-data"
+              novalidate>
             <label for="number">Número de habitación</label>
             <input type="text" name="number" id="number" value="{{ number }}" {{ readonly }}>
             <span class="error">{{ number_error }}</span>
@@ -25,6 +32,22 @@
             <textarea name="description" id="description" cols="35"
                       rows="10" {{ readonly }}>{{ description }}</textarea>
             <span class="error">{{ description_error }}</span>
+            {% if updating == true %}
+                <input type="hidden" name="id" value="{{ id }}">
+                <input type="hidden" name="confirm_update">
+                <div class="images">
+                    {% for image in images %}
+                        <div id="{{ image.id }}" class="image_container">
+                            <img src="data:image/jpeg;base64,{{ image.image }}" alt="imagen de la habitación">
+                            {% if checked == false %} {# Si ya se han verificado los datos a actualizar se borra #}
+                                <img src="../images/delete.png" class="image_button danger"
+                                     alt="icono para borrar imagen habitación" onclick="deleteImage({{ image.id }})"/>
+
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
 
             {% if checked == false %}
                 <button type="submit" name="check">Validar datos</button>
@@ -32,8 +55,14 @@
                 <label for="images">Imágenes</label>
                 <input type="file" name="images[]" id="images" accept="image/*" multiple>
                 <span class="success">{{ success }}</span>
-                <button type="submit" name="create">Crear Habitación</button>
+                {% if updating is not defined %}
+                    <button type="submit" name="create">Crear Habitación</button>
+                {% else %}
+                    <button type="submit" name="update">Actualizar Habitación</button>
+                {% endif %}
             {% endif %}
+
+            <input type="hidden" name="id" value="{{ id }}">
         </form>
     </main>
 {% endblock %}

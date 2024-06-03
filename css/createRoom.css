@@ -11,7 +11,7 @@ form {
     background: #DDDDA7;
     padding: 20px;
     border-radius: 15px;
-    width: 600px;
+    width: 60%;
 }
 
 label, input {
@@ -33,4 +33,17 @@ input[type="file"] {
 
 button {
     margin-top: 5px;
+}
+
+.image_button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    border-radius: 50%;
+    padding: 5px;
+}
+
+.image_container {
+    position: relative;
+
 }
