@@ -53,3 +53,9 @@ function detailsWindow(id) {
     },50);
 
 }
+
+
+function deleteImage(id) {
+    $(`#${id}`).remove()
+    $('#room_form').append(`<input type="hidden" name="deleted_images[]" value="${id}">`);
+}

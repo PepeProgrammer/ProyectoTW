@@ -9,17 +9,17 @@ span {
 
 .table_list {
     display: grid;
-    grid-template-columns: repeat(7, auto);
+    grid-template-columns: repeat(7, 1fr);
     padding: 15px;
     max-height: 630px;
 
 }
 
 .three_items {
-    grid-template-columns: repeat(3, auto);
+    grid-template-columns: repeat(3, 1fr);
 }
 .four_items {
-    grid-template-columns: repeat(4, auto);
+    grid-template-columns: repeat(4, 1fr);
 }
 .container_three {
     grid-column: span 3;
@@ -48,10 +48,10 @@ div.container{
 }
 
 .four_items {
-    grid-template-columns: repeat(4, auto);
+    grid-template-columns: repeat(4, 1fr);
 }
 .seven_items {
-    grid-template-columns: repeat(7, auto);
+    grid-template-columns: repeat(7, 1fr);
 }
 .odd {
     background: #e6e6ba;
@@ -117,7 +117,7 @@ button {
     ;
 }
 
-.images img {
+.images img:not(.image_button) {
     width: 300px;
     padding: 10px;
     border-radius: 15px;
