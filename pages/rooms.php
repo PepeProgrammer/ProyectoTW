@@ -18,12 +18,17 @@ if(isset($_SESSION['user'])) {
     $twigVariables['user'] = $_SESSION['user'];
 
 }
+
+if(isset($_POST['delete'])) {
+    if($roomDb->deleteRoom($_POST['delete']) !== false) {
+        $twigVariables['success'] = "Habitación eliminada correctamente";
+    } else {
+        $twigVariables['error'] = "Error al eliminar la habitación";
+    }
+}
+
 $twigVariables['rooms'] = $roomDb->getRooms();
 foreach ($twigVariables['rooms'] as $key => $room) {
     $twigVariables['rooms'][$key]['images'] = $roomDb->getRoomImages($room['id']);
 }
-//echo '<pre>';
-//var_dump($twigVariables['rooms']);
-//echo '</pre>';
-//exit();
 echo $twig->render('rooms.twig', $twigVariables);

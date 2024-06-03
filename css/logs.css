@@ -6,7 +6,6 @@ h2 {
     flex-direction: column;
     padding: 15px;
     max-height: 630px;
-    overflow-y: auto;
 
 }
 
@@ -21,9 +20,7 @@ h2 {
 .element {
    display: inherit;
 }
-.element:first-child {
-    font-weight: bold;
-}
+
 
 .element span:first-child {
     width: 20%;
@@ -38,8 +35,13 @@ h2 {
     color: #4d85ea;
 }
 
-.table_list div:nth-child(1) {
+.border {
     border-bottom: 4px solid black;
+    font-weight: bold;
+}
+
+.items {
+    overflow-y: auto;
 }
 
 

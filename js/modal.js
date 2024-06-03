@@ -20,14 +20,17 @@ function deleteModal() {
     $('.modal').remove();
 }
 
-function generateDeleteModal(message, url, buttonName, buttonText) {
-    console.log("hola");
+function generateDeleteModal(message, url, buttonName, buttonText, id = -1) {
+    let value = "";
+    if(id !== -1) {
+        value = id;
+    }
     modal = `
     <div class="modal">
         <div class="modal_content">
             <p>${message}</p>
                 <form action="${url}" method="post" novalidate>
-                    <button class="danger" type="submit" name="${buttonName}">${buttonText}</button>
+                    <button class="danger" type="submit" name="${buttonName}" value="${value}">${buttonText}</button>
                     <button onclick="deleteModal()">Cancelar</button>
                 </form>
         </div>
@@ -35,11 +38,20 @@ function generateDeleteModal(message, url, buttonName, buttonText) {
 
 `
     $('body').append(modal);
-
 }
 
 
 function detailsWindow(id) {
-    $('.container').hide();
-    $(`#${id}`).show();
+    /*Se ha creado este timeout porque se daba el caso que cuando se hacía click en el
+    boton de detalles de una habitación, se abría el modal antes de cambiarse de página y así lo evitamos,
+    El tiempo del timeout es lo suficientemente breve como para que no se note en la página*/
+    setTimeout( () => {
+        if($('.modal').length === 0) { // Si no hay un modal abierto se abre la información de la habitación
+            $('.container').hide();
+            $(`#${id}`).show();
+        }
+    },50);
+
 }
+
+

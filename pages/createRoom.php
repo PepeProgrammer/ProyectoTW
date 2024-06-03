@@ -91,6 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $logDb = new Logs();
             $logDb->insertLog( "Se ha creado la habitación con id: $room_id");
             $_SESSION['success'] = "La habitación se ha creado correctamente";
+            header('Location: rooms.php'); // Si la habitación ha sido creada correctamente se vuelve a la página de habitaciones
         }
     }
 }

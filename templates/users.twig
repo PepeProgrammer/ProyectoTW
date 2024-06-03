@@ -24,7 +24,7 @@
                     <span class="border odd">tipo</span>
                     <span class="border odd">Operaciones</span>
                 </div>
-
+            <div class="items seven_items container_seven">
                 {% for user in users %}
                     <div class="element">
                         <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ user.name }}</span>
@@ -49,6 +49,8 @@
                         </div>
                     </div>
                 {% endfor %}
+            </div>
+
 
 
         </div>

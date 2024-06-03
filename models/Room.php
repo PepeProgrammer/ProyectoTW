@@ -63,4 +63,17 @@ class Room
         $prepare->execute();
         return $prepare->get_result()->fetch_all(MYSQLI_ASSOC);
     }
+
+    public function deleteRoom($id)
+    {
+        $sql = "DELETE FROM rooms WHERE id = ?";
+        $prepare = $this->db->prepare($sql);
+        $prepare->bind_param("i", $id);
+        try {
+            $prepare->execute();
+        } catch (Exception $e) {
+            return false;
+        }
+        return true;
+    }
 }
