@@ -5,6 +5,7 @@ require_once "../models/AsideInfo.php";
 require_once "../models/Booking.php";
 require_once "../models/Room.php";
 require_once "../models/Users.php";
+require_once "../models/Logs.php";
 
 session_start();
 
@@ -26,6 +27,8 @@ $twigVariables['showFinding'] = false;
 $twigVariables['confirmation'] = "";
 $twigVariables['success'] = "";
 $twigVariables['recepcionistView'] = false;
+
+$logs = new Logs();
 
 
 if (!isset($_SESSION['user']) or ($_SESSION['user']['type'] === "admin")) {
@@ -53,6 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if( $booking->confirmBooking($_POST['booking_id']) ) {
             $twigVariables['confirmation'] = "readonly";
             $twigVariables['success'] = "Reserva realizada correctamente";
+            $logs->insertLog("Reserva confirmada. Id: " . $_POST['booking_id'] );
         } else {
             $twigVariables['error'] = "Disculpe, no se ha podido realizar la reserva";
         }
@@ -61,6 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['decline'])) {
         $booking = new Booking();
         $booking->deleteBooking($_POST['booking_id']);
+        $logs->insertLog("Eliminamos reserva. Id: " . $_POST['booking_id'] );
         header("Location: index.php");
         exit;
 
@@ -104,7 +109,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else {
                 $checkout = $twigVariables['checkout'];
                 $checkout = strtotime($checkout);
-                if($twigVariables['checkin'] !== "") { // si no se ha introducido la fecha de entrada, no comprobamos
+                if($twigVariables['checkin'] !== "" && isset($checkin)) { // si no se ha introducido la fecha de entrada, no comprobamos
                     if ($checkout < $checkin) {
                         $twigVariables['checkout_error'] = "La fecha de salida no puede ser anterior a la de entrada";
                         $correct = false;
@@ -145,6 +150,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $twigVariables['showFinding'] = true;
             $roomImages = $roomDb->getRoomImages($room['id']);
             $twigVariables['roomImages'] = $roomImages;
+            $logs->insertLog("Nueva reserva pendiente. Id: " . $booking_id );
         }
     }
 

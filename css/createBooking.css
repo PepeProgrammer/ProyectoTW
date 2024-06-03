@@ -96,4 +96,19 @@ h2 {
     margin: 0 10%;
 }
 
+.room_img {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.room_img img {
+    width: 300px;
+    padding: 10px;
+    border-radius: 15px;
+    height: fit-content;
+    align-self: flex-end;
+}
+
 

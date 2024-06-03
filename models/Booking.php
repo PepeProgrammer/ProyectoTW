@@ -39,6 +39,20 @@ class Booking
         return true;
     }
 
+    public function getBookings()
+    {
+        $prepare = $this->db->prepare("SELECT * FROM bookings ORDER BY timestamp ASC ");
+        $prepare->execute();
+        return $prepare->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function getBookingsList()
+    {
+        $prepare = $this->db->prepare("SELECT b.*, u.email, r.room_num FROM bookings AS b INNER JOIN users AS u ON b.user_id = u.id INNER JOIN rooms AS r ON b.room_id = r.id ORDER BY checkin ASC ");
+        $prepare->execute();
+        return $prepare->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
     public function confirmBooking($id)
     {
         if( !$this->getBookingById($id) ) {

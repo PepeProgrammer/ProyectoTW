@@ -41,6 +41,9 @@
             <li><a href="./db.php">Base datos</a></li>
             <li><a href="./logs.php">Logs</a></li>
         {% endif %}
+        {% if user.type == 'recepcionist' %}
+            <li><a href="./checkBooking.php">Lista reservas</a></li>
+        {% endif %}
 
     </ul>
 </nav>
