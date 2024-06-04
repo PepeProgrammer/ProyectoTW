@@ -56,8 +56,8 @@ class Booking
             $data['checkout'] = "";
         }
 
-        if(!isset($data['search']) && trim($data['search']) == "") {
-            $data['search'] = "%";
+        if(!isset($data['search']) || trim($data['search']) == "") {
+            $search = "%";
         } else {
             $search = "%" . $data['search'] . "%"; //con esto nos aseguramos de que al buscar el texto pueda aparecer cualquiera que contenga esa cadena
         }

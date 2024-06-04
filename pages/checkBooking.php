@@ -43,6 +43,7 @@ if(count($_COOKIE) > 1) {
     if(isset($_COOKIE['checkout'])){
         $twigVariables['filters']['checkout'] = $_COOKIE['checkout'];
     }
+
     $twigVariables['filters']['orderby'] = $_COOKIE['orderby'];
     $twigVariables['filters']['order'] = $_COOKIE['order'];
     $filters = $twigVariables['filters'];

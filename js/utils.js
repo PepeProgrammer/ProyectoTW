@@ -87,6 +87,7 @@ function searchBookings() {
                 order: order
             },
             success: function (response) {
+                console.log(response)
                 response = JSON.parse(response);
                 let content = "";
                 for (let i = 0; i < response.length; i++) {
