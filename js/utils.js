@@ -1,3 +1,4 @@
+var lastPetitionTime = 0;
 function generateDeleteUserModal(id, email) {
     console.log("hola");
     modal = `
@@ -58,4 +59,72 @@ function detailsWindow(id) {
 function deleteImage(id) {
     $(`#${id}`).remove()
     $('#room_form').append(`<input type="hidden" name="deleted_images[]" value="${id}">`);
+}
+
+
+
+function searchBookings() {
+    let search_text = $('#searcher').val();
+    let checkin = $('#checkin').val();
+    let checkout = $('#checkout').val();
+
+    //ordenación
+    let orderby = $('#orderby').val();
+    let order = $('#order').val();
+
+    let now = Date.now();
+    if (now - lastPetitionTime > 100) { //Con esta línea evitamos que se puedan hacer peticiones continuas al servidor y sobrecargarlo
+        $.ajax({
+            type: 'POST',
+            url: '../extra/getBookings.php',
+            data: {
+                search: search_text,
+                checkin: checkin,
+                checkout: checkout,
+                orderby: orderby,
+                order: order
+            },
+            success: function (response) {
+                response = JSON.parse(response);
+                let content = "";
+                for (let i = 0; i < response.length; i++) {
+                    console.log(response[i])
+                    let css = i % 2 === 0 ? 'even' : 'odd';
+                    let comments = "";
+                    if (response[i].comments !== "") {
+                        comments = `
+                    <h3>Comentarios</h3>
+                    <p class="comments">${response[i].comments}</p>
+`
+                    } else {
+                        comments = "<p>No hay comentarios</p>";
+                    }
+                    content += `
+                <div class="element">
+                            <span class="${css}">${response[i].email}</span>
+                            <span class="${css}">${response[i].room_num}</span>
+                            <span class="${css}">${response[i].checkin}</span>
+                            <span class="${css}">${response[i].checkout}</span>
+                            <div class="operations ${css}">
+                                <a href="createRoom.php?id={{ room.id }}">
+                                    <img src="../images/edit.png" class="image_button"
+                                         alt="icono para editar reserva"/>
+                                </a>
+                                <img src="../images/delete.png" class="image_button" alt="icono para borrar habitacion"
+                                     onclick="generateDeleteModal('¿Desea eliminar la reserva de la habitación ${response[i].room_num}','rooms.php', 'delete', 'Eliminar', ${response[i].id})"/>
+                            </div>
+                                <div id="${response[i].id}"
+                                 class="container container_five ${css}">
+                                    ${comments}
+                                </div>    
+                </div>
+                `;
+                }
+
+                $('#items').html(content);
+
+            }
+        });
+        lastPetitionTime = now;
+    }
 }

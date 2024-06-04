@@ -27,12 +27,11 @@
         <li><a href="./index.php">Inicio</a></li>
         <li><a href="./rooms.php">Habitaciones</a></li>
         <li><a href="./servicios.php">Servicios</a></li>
-        <li><a href="./createBooking.php">Reservas</a></li>
         {% if user is not defined %}
             <li><a href="./createUser.php">registrarse</a></li>
         {% endif %}
 
-        {% if user.type is defined and user.type != 'client'%}
+        {% if user.type is defined and user.type != 'client' %}
             <li><a href="./users.php">Usuarios</a></li>
         {% elseif user.type == 'client' %}
             <li><a href="./profile.php">Perfil</a></li>
@@ -40,10 +39,11 @@
         {% if user.type == 'admin' %}
             <li><a href="./db.php">Base datos</a></li>
             <li><a href="./logs.php">Logs</a></li>
+        {% elseif user is defined %}
+            <li><a href="./createBooking.php">Hospedarse</a></li>
+            <li><a href="./checkBooking.php">Reservas</a></li>
         {% endif %}
-        {% if user.type == 'recepcionist' %}
-            <li><a href="./checkBooking.php">Lista reservas</a></li>
-        {% endif %}
+
 
     </ul>
 </nav>

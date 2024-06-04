@@ -1,4 +1,6 @@
 <?php
+require_once '../models/Database.php';
+
 class Booking
 {
     private $db;
@@ -46,6 +48,43 @@ class Booking
         return $prepare->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function getBookingFiltered($data)
+    {
+        if(trim($data['search']) == "") {
+            $data['search'] = "%";
+        }
+        $search = "%" . $data['search'] . "%"; //con esto nos aseguramos de que al buscar el texto pueda aparecer cualquiera que contenga esa cadena
+        if(!isset($data['orderby']) || $data['orderby'] == 'old') {
+            $orderby = 'checkin';
+        } elseif($data['orderby'] == 'day_num') {
+            $orderby = 'DATEDIFF(checkout, checkin)';
+        }
+
+        if(isset($data['order'])) {
+            $order = $data['order'];
+        } else {
+            $order = 'ASC';
+        }
+
+        $sql = "SELECT b.*, u.email, r.room_num FROM bookings AS b INNER JOIN users AS u ON b.user_id = u.id INNER JOIN rooms AS r ON b.room_id = r.id WHERE b.comments LIKE ? AND b.checkin >= ? AND b.checkout <= ? ORDER BY $orderby $order";
+        if ($data['checkin'] == "") {
+            $data['checkin'] = "1980-01-01";
+        }
+        if ($data['checkout'] == "") {
+            $data['checkout'] = "2200-12-31";
+        }
+
+        $prepare = $this->db->prepare($sql);
+
+        $prepare->bind_param("sss", $search, $data['checkin'], $data['checkout']);
+        try {
+            $prepare->execute();
+        } catch (Exception $e) {
+            return false;
+        }
+        return $prepare->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
     public function getBookingsList()
     {
         $prepare = $this->db->prepare("SELECT b.*, u.email, r.room_num FROM bookings AS b INNER JOIN users AS u ON b.user_id = u.id INNER JOIN rooms AS r ON b.room_id = r.id ORDER BY checkin ASC ");
@@ -55,7 +94,7 @@ class Booking
 
     public function confirmBooking($id)
     {
-        if( !$this->getBookingById($id) ) {
+        if (!$this->getBookingById($id)) {
             return false;
         }
 

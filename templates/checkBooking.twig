@@ -7,7 +7,7 @@
 
 {% block script %}
     {{ parent() }}
-    <script src="../js/modal.js"></script>
+    <script src="../js/utils.js"></script>
 {% endblock %}
 
 {% block main %}
@@ -15,6 +15,40 @@
         <h1>Lista reservas</h1>
         <span class="success">{{ success }}</span>
         <span class="error">{{ error }}</span>
+
+        <div class="filters">
+            <div>
+                <label for="searcher">Buscar</label>
+                <input class="searcher" type="text" name="searcher" id="searcher" oninput="searchBookings()"/>
+            </div>
+            <div>
+                <label for="checkin">Checkin</label>
+                <input name="checkin" id="checkin" type="date" onchange="searchBookings()"/>
+            </div>
+            <div>
+                <label for="checkout">Checkout</label>
+                <input name="checkout" id="checkout" type="date" onchange="searchBookings()"/>
+            </div>
+
+            <div>
+                <label for="orderby">Ordenar por</label>
+                <select id="orderby" onchange="searchBookings()">
+                    <option value="old">Antigüedad</option>
+                    <option value="day_num">Total de días</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="order">Orden</label>
+                <select id="order" onchange="searchBookings()">
+                    <option value="asc">Ascendente</option>
+                    <option value="desc">Descendente</option>
+                </select>
+            </div>
+
+
+            <section></section>
+        </div>
         {% if bookings|length > 0 %}
             <div class="table_list five_items">
                 <div class="element">
@@ -24,9 +58,9 @@
                     <span class="border odd">Checkout</span>
                     <span class="border odd">Operaciones</span>
                 </div>
-                <div class="items container_five five_items">
+                <div id="items" class="items container_five five_items">
                     {% for booking in bookings %}
-                        <div id="content" class="element" onclick="detailsWindow('{{ booking.id }}')">
+                        <div class="element" onclick="detailsWindow('{{ booking.id }}')">
                             <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ booking.email }}</span>
                             <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ booking.room_num }}</span>
                             <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ booking.checkin }}</span>
