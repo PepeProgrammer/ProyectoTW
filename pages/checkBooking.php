@@ -29,6 +29,19 @@ if(isset($_POST['delete'])) {
     }
 }
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if(isset($_POST['hidden_id']) and isset($_POST['comments'])){
+        if($_POST['hidden_id'] != ""){
+            $comment = strip_tags($_POST['comments']);
+            if( $bookingDb->modifyBooking($_POST['hidden_id'],$comment) ){
+                $twigVariables['success'] = "Comentario modificado correctamente";
+            } else {
+                $twigVariables['error'] = "Error al añadir el comentario";
+            }
+        }
+    }
+}
+
 $twigVariables['bookings'] = $bookingDb->getBookingsList();
 
 echo $twig->render('checkBooking.twig', $twigVariables);

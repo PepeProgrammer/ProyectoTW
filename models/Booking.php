@@ -97,4 +97,17 @@ class Booking
         }
         return true;
     }
+
+    public function modifyBooking($id,$comment)
+    {
+        $sql = "UPDATE bookings SET comments = ? WHERE id = ?";
+        $prepare = $this->db->prepare($sql);
+        $prepare->bind_param("si", $comment, $id);
+        try {
+            $prepare->execute();
+        } catch (Exception $e) {
+            return false;
+        }
+        return true;
+    }
 }
