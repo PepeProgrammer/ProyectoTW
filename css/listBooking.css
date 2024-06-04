@@ -65,4 +65,32 @@ div.container {
     margin: 0
 }
 
+.items:hover {
+    cursor: inherit;
+}
 
+.modifications form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.modifications {
+    margin: 20px 25%;
+}
+
+.modifications label {
+    text-align: center;
+    font-size: 17px;
+}
+
+.modifications textarea {
+    margin: 0 30px;
+    background-color: #e6e6ba;
+    margin: 3px;
+}
+
+.modifications div {
+    display: flex;
+    justify-content: space-around;
+}

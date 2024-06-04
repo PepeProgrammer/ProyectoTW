@@ -131,3 +131,21 @@ function searchBookings() {
         lastPetitionTime = now;
     }
 }
+
+function showElement(text= "",id= "-1", room = "", email = "") {
+    let hidden = document.getElementById("hidden");
+    if (hidden.style.display == "none") {
+        hidden.style.display = "block"
+    }else{
+        hidden.style.display = "none"
+    }
+
+    let textarea = document.getElementById("comments");
+    textarea.value = text;
+
+    let input = document.getElementById("hidden_id");
+    input.value = id;
+
+    let label = document.getElementById("modification_request_text");
+    label.textContent = "Modificación del comentario del usuario " + email + " para la habitación " + room + ":";
+}
