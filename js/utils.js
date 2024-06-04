@@ -133,9 +133,9 @@ function searchBookings() {
 }
 
 function showElement(text= "",id= "-1", room = "", email = "") {
-    let hidden = document.getElementById("hidden");
-    if (hidden.style.display == "none") {
-        hidden.style.display = "block"
+    let hidden = document.getElementById(`hidden_${id}`);
+    if (hidden.style.display === "none") {
+        hidden.style.display = "block";
     }else{
         hidden.style.display = "none"
     }
@@ -147,5 +147,5 @@ function showElement(text= "",id= "-1", room = "", email = "") {
     input.value = id;
 
     let label = document.getElementById("modification_request_text");
-    label.textContent = "Modificación del comentario del usuario " + email + " para la habitación " + room + ":";
+    label.textContent = "Modificación del comentario:";
 }

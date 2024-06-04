@@ -15,18 +15,8 @@
         <h1>Lista reservas</h1>
         <span class="success">{{ success }}</span>
         <span class="error">{{ error }}</span>
-        <div class="modifications" id="hidden" style="display: none;">
-            <form action="checkBooking.php" method="post">
-                <label id="modification_request_text" for="comments">Modificación de comentario:</label>
-                <textarea name="comments" id="comments" cols="30" rows="6">{{ comments }}</textarea>
-                <input id="hidden_id" type="hidden" name="hidden_id" value="">
-                <div>
-                    <button type="submit" value="Modificar">Modificar</button>
-                    <button value="cancelar" onclick="showElement()">Cancelar</button>
-                </div>
 
-            </form>
-        </div>
+
         <div class="filters">
             <div>
                 <label for="searcher">Buscar</label>
@@ -64,6 +54,7 @@
 
             <section></section>
         </div>
+
         <div class="table_list five_items">
             <div class="element">
                 <span class="border odd">Usuario</span>
@@ -73,72 +64,52 @@
                 <span class="border odd">Operaciones</span>
             </div>
             <div id="items" class="items container_five five_items">
-                {% for booking in bookings %}
-                    <div class="element" onclick="detailsWindow('{{ booking.id }}')">
-                        <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ booking.email }}</span>
-                        <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ booking.room_num }}</span>
-                        <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ booking.checkin }}</span>
-                        <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ booking.checkout }}</span>
-                        <div class="operations {{ loop.index % 2 == 0 ? 'odd' : 'even' }}">
-                            <a href="createRoom.php?id={{ room.id }}">
-                                <img src="../images/edit.png" class="image_button"
-                                     alt="icono para editar habitacion"/>
-                            </a>
-                            <img src="../images/delete.png" class="image_button" alt="icono para borrar habitacion"
-                                 onclick="generateDeleteModal('¿Desea eliminar la habitación {{ room.room_num }}?','rooms.php', 'delete', 'Eliminar', {{ room.id }})"/>
+                    {% if bookings|length > 0 %}
+                        <div class="items container_five five_items">
+                            {% for booking in bookings %}
+                                <div id="content" class="element">
+                                    <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ booking.email }}</span>
+                                    <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ booking.room_num }}</span>
+                                    <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ booking.checkin }}</span>
+                                    <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ booking.checkout }}</span>
+                                    <div class="operations {{ loop.index % 2 == 0 ? 'odd' : 'even' }}">
+                                        <img src="../images/edit.png" class="image_button"
+                                             alt="icono para editar reserva"
+                                             onclick="showElement('{{ booking.comments }}','{{ booking.id }}','{{ booking.room_num }}','{{ booking.email }}')"/>
+
+                                        <img src="../images/delete.png" class="image_button"
+                                             alt="icono para borrar reserva"
+                                             onclick="generateDeleteModal('¿Desea eliminar la reserva de la habitación {{ room.room_num }}?','checkBooking.php', 'delete', 'Eliminar', {{ booking.id }})"/>
+                                    </div>
+
+                                    <div id="{{ booking.id }}"
+                                         class="container container_five  {{ loop.index % 2 == 0 ? 'odd' : 'even' }}">
+                                        {% if booking.comments != "" %}
+                                            <h3>Comentarios</h3>
+                                            <p class="comments">{{ booking.comments }}</p>
+                                            <div class="modifications" id="hidden_{{ booking.id }}" style="display: none;">
+                                                <form action="checkBooking.php" method="post">
+                                                    <label id="modification_request_text" for="comments">Modificación de comentario:</label>
+                                                    <textarea name="comments" id="comments" cols="30" rows="6">{{ comments }}</textarea>
+                                                    <input id="hidden_id" type="hidden" name="hidden_id" value="">
+                                                    <div>
+                                                        <button type="submit" value="Modificar">Modificar</button>
+                                                        <button value="cancelar" onclick="showElement()">Cancelar</button>
+                                                    </div>
+
+                                                </form>
+                                            </div>
+                                        {% else %}
+                                            <p>No hay comentarios</p>
+                                        {% endif %}
+
+                                    </div>
+
+                                </div>
+                            {% endfor %}
                         </div>
-
-        <div class="modifications" id="hidden" style="display: none;">
-            <form action="checkBooking.php" method="post">
-                <label id="modification_request_text" for="comments">Modificación de comentario:</label>
-                <textarea name="comments" id="comments" cols="30" rows="6">{{ comments }}</textarea>
-                <input id="hidden_id" type="hidden" name="hidden_id" value="">
-                <div>
-                    <button type="submit" value="Modificar">Modificar</button>
-                    <button value="cancelar" onclick="showElement()">Cancelar</button>
-                </div>
-
-            </form>
-        </div>
-
-        {% if bookings|length > 0 %}
-            <div class="table_list five_items">
-                <div class="element">
-                    <span class="border odd">Usuario</span>
-                    <span class="border odd">Habitacion</span>
-                    <span class="border odd">Checkin</span>
-                    <span class="border odd">Checkout</span>
-                    <span class="border odd">Operaciones</span>
-                </div>
-                <div class="items container_five five_items">
-                    {% for booking in bookings %}
-                        <div id="content" class="element">
-                            <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ booking.email }}</span>
-                            <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ booking.room_num }}</span>
-                            <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ booking.checkin }}</span>
-                            <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ booking.checkout }}</span>
-                            <div class="operations {{ loop.index % 2 == 0 ? 'odd' : 'even' }}">
-                                <img src="../images/edit.png" class="image_button" alt="icono para editar reserva"
-                                    onclick="showElement('{{ booking.comments }}','{{ booking.id }}','{{ booking.room_num }}','{{ booking.email }}')"/>
-
-                                <img src="../images/delete.png" class="image_button" alt="icono para borrar reserva"
-                                     onclick="generateDeleteModal('¿Desea eliminar la reserva de la habitación {{ room.room_num }}?','checkBooking.php', 'delete', 'Eliminar', {{ booking.id }})"/>
-                            </div>
-
-                            <div id="{{ booking.id }}"
-                                 class="container container_five  {{ loop.index % 2 == 0 ? 'odd' : 'even' }}">
-                                {% if booking.comments != "" %}
-                                    <h3>Comentarios</h3>
-                                    <p class="comments">{{ booking.comments }}</p>
-                                {% else %}
-                                    <p>No hay comentarios</p>
-                                {% endif %}
-
-                        </div>
-
                     </div>
-                {% endfor %}
-            </div>
-        </div>
+                {% endif %}
+                </div>
     </main>
 {% endblock %}
