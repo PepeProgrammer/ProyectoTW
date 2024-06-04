@@ -68,6 +68,8 @@ function searchBookings() {
     let checkin = $('#checkin').val();
     let checkout = $('#checkout').val();
 
+    console.log(checkout)
+
     //ordenación
     let orderby = $('#orderby').val();
     let order = $('#order').val();

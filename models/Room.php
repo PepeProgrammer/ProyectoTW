@@ -85,7 +85,6 @@ class Room
     }
 
     public function updateRoom($data, $id){
-        echo $id;
         $sql = "UPDATE rooms SET room_num = ?, price = ?, capacity = ?, description = ? WHERE id = ?";
         $prepare = $this->db->prepare($sql);
         $prepare->bind_param("sdisi", $data['number'], $data['price'], $data['capacity'], $data['description'], $id);

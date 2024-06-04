@@ -29,6 +29,24 @@ if(isset($_POST['delete'])) {
     }
 }
 
-$twigVariables['bookings'] = $bookingDb->getBookingsList();
+$filters = [];
+
+if(count($_COOKIE) > 1) {
+    if(isset($_COOKIE['search']) && $_COOKIE['search'] !== 'data_empty'){
+        $twigVariables['filters']['search'] = $_COOKIE['search'];
+    } else {
+        $twigVariables['filters']['search'] = "";
+    }
+    if(isset($_COOKIE['checkin'])){
+        $twigVariables['filters']['checkin'] = $_COOKIE['checkin'];
+    }
+    if(isset($_COOKIE['checkout'])){
+        $twigVariables['filters']['checkout'] = $_COOKIE['checkout'];
+    }
+    $twigVariables['filters']['orderby'] = $_COOKIE['orderby'];
+    $twigVariables['filters']['order'] = $_COOKIE['order'];
+    $filters = $twigVariables['filters'];
+}
+$twigVariables['bookings'] = $bookingDb->getBookingsFiltered($filters);
 
 echo $twig->render('checkBooking.twig', $twigVariables);

@@ -19,91 +19,91 @@
         <div class="filters">
             <div>
                 <label for="searcher">Buscar</label>
-                <input class="searcher" type="text" name="searcher" id="searcher" oninput="searchBookings()"/>
+                <input class="searcher" type="text" name="searcher" id="searcher" oninput="searchBookings()"
+                       value="{{ filters.search }}"/>
             </div>
             <div>
                 <label for="checkin">Checkin</label>
-                <input name="checkin" id="checkin" type="date" onchange="searchBookings()"/>
+                <input name="checkin" id="checkin" type="date" onchange="searchBookings()"
+                       value="{{ filters.checkin }}"/>
             </div>
             <div>
                 <label for="checkout">Checkout</label>
-                <input name="checkout" id="checkout" type="date" onchange="searchBookings()"/>
+                <input name="checkout" id="checkout" type="date" onchange="searchBookings()"
+                       value="{{ filters.checkout }}"/>
             </div>
 
             <div>
                 <label for="orderby">Ordenar por</label>
                 <select id="orderby" onchange="searchBookings()">
-                    <option value="old">Antigüedad</option>
-                    <option value="day_num">Total de días</option>
+                    <option value="old" {% if filters.orderby == 'old' %} selected {% endif %}>Antigüedad</option>
+                    <option value="day_num" {% if filters.orderby == 'day_num' %} selected {% endif %}>Total de días
+                    </option>
                 </select>
             </div>
 
             <div>
                 <label for="order">Orden</label>
                 <select id="order" onchange="searchBookings()">
-                    <option value="asc">Ascendente</option>
-                    <option value="desc">Descendente</option>
+                    <option value="asc" {% if filters.order == 'asc' %} selected {% endif %}>Ascendente</option>
+                    <option value="desc" {% if filters.order == 'desc' %} selected {% endif %}>Descendente</option>
                 </select>
             </div>
 
 
             <section></section>
         </div>
-        {% if bookings|length > 0 %}
-            <div class="table_list five_items">
-                <div class="element">
-                    <span class="border odd">Usuario</span>
-                    <span class="border odd">Habitacion</span>
-                    <span class="border odd">Checkin</span>
-                    <span class="border odd">Checkout</span>
-                    <span class="border odd">Operaciones</span>
-                </div>
-                <div id="items" class="items container_five five_items">
-                    {% for booking in bookings %}
-                        <div class="element" onclick="detailsWindow('{{ booking.id }}')">
-                            <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ booking.email }}</span>
-                            <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ booking.room_num }}</span>
-                            <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ booking.checkin }}</span>
-                            <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ booking.checkout }}</span>
-                            <div class="operations {{ loop.index % 2 == 0 ? 'odd' : 'even' }}">
-                                <a href="createRoom.php?id={{ room.id }}">
-                                    <img src="../images/edit.png" class="image_button"
-                                         alt="icono para editar habitacion"/>
-                                </a>
-                                <img src="../images/delete.png" class="image_button" alt="icono para borrar habitacion"
-                                     onclick="generateDeleteModal('¿Desea eliminar la habitación {{ room.room_num }}?','rooms.php', 'delete', 'Eliminar', {{ room.id }})"/>
-                            </div>
+        <div class="table_list five_items">
+            <div class="element">
+                <span class="border odd">Usuario</span>
+                <span class="border odd">Habitacion</span>
+                <span class="border odd">Checkin</span>
+                <span class="border odd">Checkout</span>
+                <span class="border odd">Operaciones</span>
+            </div>
+            <div id="items" class="items container_five five_items">
+                {% for booking in bookings %}
+                    <div class="element" onclick="detailsWindow('{{ booking.id }}')">
+                        <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ booking.email }}</span>
+                        <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ booking.room_num }}</span>
+                        <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ booking.checkin }}</span>
+                        <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ booking.checkout }}</span>
+                        <div class="operations {{ loop.index % 2 == 0 ? 'odd' : 'even' }}">
+                            <a href="createRoom.php?id={{ room.id }}">
+                                <img src="../images/edit.png" class="image_button"
+                                     alt="icono para editar habitacion"/>
+                            </a>
+                            <img src="../images/delete.png" class="image_button" alt="icono para borrar habitacion"
+                                 onclick="generateDeleteModal('¿Desea eliminar la habitación {{ room.room_num }}?','rooms.php', 'delete', 'Eliminar', {{ room.id }})"/>
+                        </div>
 
-                            <div id="{{ booking.id }}"
-                                 class="container container_five  {{ loop.index % 2 == 0 ? 'odd' : 'even' }}">
-                                {#
-                                {% if room.images|length > 0 %}
-                                    <h2>Fotos de la habitación</h2>
-                                    <div class="images">
-                                        {% for image in room.images %}
-                                            <img src="data:image/jpeg;base64,{{ image.image }}"
-                                                 alt="imagen de la habitación">
-                                        {% endfor %}
-                                    </div>
-                                {% endif %}
-                                #}
-                                {% if booking.comments != "" %}
-                                    <h3>Comentarios</h3>
-                                    <p class="comments">{{ booking.comments }}</p>
-                                {% else %}
-                                    <p>No hay comentarios</p>
-                                {% endif %}
-
-                            </div>
+                        <div id="{{ booking.id }}"
+                             class="container container_five  {{ loop.index % 2 == 0 ? 'odd' : 'even' }}">
+                            {#
+                            {% if room.images|length > 0 %}
+                                <h2>Fotos de la habitación</h2>
+                                <div class="images">
+                                    {% for image in room.images %}
+                                        <img src="data:image/jpeg;base64,{{ image.image }}"
+                                             alt="imagen de la habitación">
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            #}
+                            {% if booking.comments != "" %}
+                                <h3>Comentarios</h3>
+                                <p class="comments">{{ booking.comments }}</p>
+                            {% else %}
+                                <p>No hay comentarios</p>
+                            {% endif %}
 
                         </div>
-                        {% if user.type == 'client' %}
-                        {% endif %}
-                    {% endfor %}
-                </div>
+
+                    </div>
+                    {% if user.type == 'client' %}
+                    {% endif %}
+                {% endfor %}
             </div>
-        {% else %}
-            <p class="empty">Actualmente no hay reservas en el sistema</p>
-        {% endif %}
+        </div>
     </main>
 {% endblock %}
