@@ -6,7 +6,7 @@ function generateDeleteUserModal(id, email) {
             <p>¿Seguro que deseas eliminar al usuario ${email}?</p>
             <div>
                 <a class="redirection danger" href="users.php?delete=${id}">Eliminar usuario</a>
-                <button onclick="deleteModal()">Cancelar</button>
+                <button type="button" onclick="deleteModal()">Cancelar</button>
             </div>
         </div>
     </div>
@@ -31,7 +31,7 @@ function generateDeleteModal(message, url, buttonName, buttonText, id = -1) {
             <p>${message}</p>
                 <form action="${url}" method="post" novalidate>
                     <button class="danger" type="submit" name="${buttonName}" value="${value}">${buttonText}</button>
-                    <button onclick="deleteModal()">Cancelar</button>
+                    <button type="button" onclick="deleteModal()">Cancelar</button>
                 </form>
         </div>
     </div>
@@ -123,7 +123,7 @@ function searchBookings() {
                                                 <input id="hidden_id" type="hidden" name="hidden_id" value="">
                                                 <div>
                                                     <button type="submit" value="Modificar">Modificar</button>
-                                                    <button value="cancelar" onclick="showElement()">Cancelar</button>
+                                                    <button type="button" value="cancelar" onclick="showElement()">Cancelar</button>
                                                 </div>
                                             </form>
                                         </div>
