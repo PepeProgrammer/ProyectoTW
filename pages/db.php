@@ -31,14 +31,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo $sql;
         return;
     } else {
-
         if (isset($_POST['delete'])) {
             $backup->delete($_SESSION['user']['id']);
             $_SESSION['message'] = 'Datos eliminados correctamente';
         } elseif (isset($_POST['restore']) && is_uploaded_file($_FILES['sql']['tmp_name'])) {
-            $backup->delete($_SESSION['user']['id']);
-            $backup->restore(@file_get_contents($_FILES['sql']['tmp_name']));
-            $_SESSION['message'] = 'Datos restaurados correctamente';
+
+            if(explode('.',$_FILES['sql']['name'])[1] === 'sql') {
+                $backup->delete($_SESSION['user']['id']);
+                $backup->restore(@file_get_contents($_FILES['sql']['tmp_name']));
+                $_SESSION['message'] = 'Datos restaurados correctamente';
+            } else {
+                $_SESSION['message'] = 'El archivo no es un archivo SQL';
+            }
+
         }
         header("Location: {$_SERVER['SCRIPT_NAME']}", true, 303);
         exit();

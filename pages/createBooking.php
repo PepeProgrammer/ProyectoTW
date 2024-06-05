@@ -39,7 +39,7 @@ if (!isset($_SESSION['user']) or ($_SESSION['user']['type'] === "admin")) {
 if ($_SESSION['user']['type'] === "recepcionist") {
     $twigVariables['recepcionist_view'] = true;
     $userDb = new Users();
-    $twigVariables['users'] = $userDb->getUsers();
+    $twigVariables['users'] = $userDb->getUsersClients();
     if (isset($_POST['user_id'])) {
         $userid_bd = $_POST['user_id'];
     }

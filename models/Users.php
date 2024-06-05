@@ -57,6 +57,12 @@ class Users
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function getUsersClients(): array
+    {
+        $sql = "SELECT * FROM users WHERE type = 'client'";
+        $result = $this->db->query($sql);
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
     public function getUsersByType($type)
     {
         $sql = "SELECT * FROM users WHERE type = ?";

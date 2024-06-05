@@ -111,16 +111,16 @@ function searchBookings() {
                                      alt="icono para editar reserva" onclick="showElement('${bookings[i].comments}','${bookings[i].id}')"/>
           
                                 <img src="../images/delete.png" class="image_button" alt="icono para borrar habitacion"
-                                     onclick="generateDeleteModal('¿Desea eliminar la reserva de la habitación ${bookings[i].room_num}','checkBooking.php', 'delete', 'Eliminar', ${bookings[i].id})"/>
+                                     onclick="generateDeleteModal('¿Desea eliminar la reserva de la habitación ${bookings[i].room_num}','../pages/bookings.php', 'delete', 'Eliminar', ${bookings[i].id})"/>
                             </div>
                                 <div id="${bookings[i].id}"
                                  class="container container_five ${css}">
                                     ${comments}
                                     <div class="modifications" id="hidden_${bookings[i].id}" style="display: none;">
-                                            <form action="../pages/bookings.php" method="post" novalidate>
+                                            <form action="bookings.php" method="post" novalidate>
                                                 <label id="modification_request_text" for="comments">Modificación de comentario:</label>
                                                 <textarea name="comments" class="${textareaCss}" id="comments" cols="30" rows="6">${bookings[i].comments}</textarea>
-                                                <input id="hidden_id" type="hidden" name="hidden_id" value="">
+                                                <input id="hidden_${bookings[i].id}" type="hidden" name="hidden_id" value="${bookings[i].id}">
                                                 <div>
                                                     <button type="submit" value="Modificar">Modificar</button>
                                                     <button type="button" value="cancelar" onclick="showElement()">Cancelar</button>
