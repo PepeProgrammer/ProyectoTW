@@ -239,7 +239,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $userDb = new Users();
         if (!isset($_SESSION['update'])) {
             $data['pass'] = password_hash($password, PASSWORD_DEFAULT);
-            if (!$userDb->createUser($data)) {
+            $user_id = $userDb->createUser($data);
+            if (!$user_id) {
+
                 $twigVariables['error'] = "Error al insertar el usuario en la base de datos";
                 $confirmation = "";
             } else {
@@ -248,6 +250,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $_SESSION['success'] = "Usuario creado correctamente";
                     header('Location: users.php');
                 } else {
+                    $_SESSION['user'] = $userDb->getUser($user_id);
+                    unset($_SESSION['user']['pass']); //No queremos guardar la contraseña en la sesión
+
                     $logs->insertLog("Nuevo usuario creado. Email: " . $email);
                     header('Location: index.php');
                 }
@@ -305,4 +310,4 @@ $twigVariables['confirmation'] = $confirmation;
 $twigVariables['button_text'] = $button_text;
 
 
-echo $twig->render('createUser.twig', $twigVariables);
+echo $twig->render('user_data.twig', $twigVariables);

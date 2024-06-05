@@ -1,6 +1,6 @@
 <?php
 
-class Room
+class Rooms
 {
     private $db;
 
@@ -52,7 +52,7 @@ class Room
 
     public function getRooms()
     {
-        $prepare = $this->db->prepare("SELECT * FROM rooms ORDER BY capacity ASC ");
+        $prepare = $this->db->prepare("SELECT * FROM rooms ORDER BY room_num ASC ");
         $prepare->execute();
         return $prepare->get_result()->fetch_all(MYSQLI_ASSOC);
     }
@@ -145,4 +145,13 @@ class Room
         $room = $result->fetch_assoc();
         return $room;
     }
+
+    public function getRoomByNum($num){
+        $prepare = $this->db->prepare("SELECT * FROM rooms WHERE room_num = ?");
+        $prepare->bind_param("s", $num);
+        $prepare->execute();
+        return $prepare->get_result()->fetch_assoc();
+    }
+
+
 }

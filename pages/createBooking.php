@@ -3,7 +3,7 @@
 require_once "../vendor/autoload.php";
 require_once "../models/AsideInfo.php";
 require_once "../models/Booking.php";
-require_once "../models/Room.php";
+require_once "../models/Rooms.php";
 require_once "../models/Users.php";
 require_once "../models/Logs.php";
 
@@ -21,11 +21,9 @@ $twigVariables['checkin'] = "";
 $twigVariables['checkout'] = "";
 $twigVariables['checkin_error'] = ""; // el dia de entrada no puede ser anterior al actual
 $twigVariables['checkout_error'] = ""; // el dia de salida no puede ser anterior al de entrada
-$twigVariables['error'] = "";
 $correct = false;
 $twigVariables['showFinding'] = false;
 $twigVariables['confirmation'] = "";
-$twigVariables['success'] = "";
 $twigVariables['recepcionistView'] = false;
 
 $logs = new Logs();
@@ -53,6 +51,7 @@ if ($_SESSION['user']['type'] === "recepcionist") {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['accept'])) {  // si acepta la reserva, la confirmamos (tenemos en cuenta que ha podido ser borrada)
         $booking = new Booking();
+
         if( $booking->confirmBooking($_POST['booking_id']) ) {
             $twigVariables['confirmation'] = "readonly";
             $twigVariables['success'] = "Reserva realizada correctamente";
@@ -66,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $booking = new Booking();   // si la rechaza, la eliminamos
         $booking->deleteBooking($_POST['booking_id']);
         $logs->insertLog("Eliminamos reserva. Id: " . $_POST['booking_id'] );
-        header("Location: index.php");
+        header("Location: bookings.php");
         exit;
 
     } else if (isset($_POST['send'])) {
@@ -123,7 +122,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $twigVariables['confirmation'] = "readonly";
         // buscamos en la base de datos
 
-        $roomDb = new Room();
+        $roomDb = new Rooms();
         $room = $roomDb->getRoom($twigVariables['people_num'], $twigVariables['checkin'], $twigVariables['checkout']);
 
         if ($room === null) {

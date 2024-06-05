@@ -1,7 +1,7 @@
 <?php
 require_once "../vendor/autoload.php";
 require_once "../models/AsideInfo.php";
-require_once "../models/Room.php";
+require_once "../models/Rooms.php";
 require_once "../models/Logs.php";
 session_start();
 
@@ -18,7 +18,7 @@ $twigVariables = [];
 $twigVariables['user'] = $_SESSION['user'];
 $errors = 0;
 
-$roomDb = new Room();
+$roomDb = new Rooms();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['check'])) { //comprobamos si se han introducimos bien los datos para avisar al usuario en caso contrario
 //        echo '<pre>';
@@ -30,7 +30,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $twigVariables['number_error'] = "El número de habitación no puede estar vacío";
                 $errors++;
             } else {
-                $twigVariables['number'] = strip_tags($_POST['number']);
+                if($roomDb->getRoomByNum($_POST['number']) === null || isset($_POST['confirm_update'])){ //Si la habitación se está creando comprobamos si ya existe una con ese nombre
+                    $twigVariables['number'] = strip_tags($_POST['number']);
+                } else {
+                    $twigVariables['number_error'] = "Ya hay una habitación con ese número";
+                    $errors++;
+
+                }
             }
         }
 
@@ -147,4 +153,4 @@ if (isset($_GET['id'])) {
 
 $twigVariables['aside'] = $asideInfo->getAsideInfo();
 
-echo $twig->render('createRoom.twig', $twigVariables);
+echo $twig->render('room_data.twig', $twigVariables);

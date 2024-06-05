@@ -24,7 +24,7 @@
                     <span class="border odd">tipo</span>
                     <span class="border odd">Operaciones</span>
                 </div>
-            <div class="items seven_items container_seven">
+            <div class="items seven_items container_seven cursor">
                 {% for user in users %}
                     <div class="element">
                         <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ user.name }}</span>
@@ -42,7 +42,7 @@
                             {% endif %}
                         </span>
                         <div class="operations {{ loop.index % 2 == 0 ? 'odd' : 'even' }}">
-                            <a href="createUser.php?id={{ user.id }}">
+                            <a href="user_data.php?id={{ user.id }}">
                                 <img src="../images/edit.png" class="image_button" alt="icono para editar usuario"/>
                             </a>
                             <img src="../images/delete.png" class="image_button" alt="icono para borrar usuario" onclick="generateDeleteUserModal({{ user.id }},'{{user.email }}')"/>
@@ -60,7 +60,7 @@
         {% if message is defined %}
             <p class="success">{{ message }}</p>
         {% endif %}
-        <button onclick="window.location.href='createUser.php'">Crear usuario</button>
+        <a class="redirection" href="user_data.php">Crear usuario</a>
 
     </main>
 

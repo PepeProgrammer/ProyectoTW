@@ -19,7 +19,7 @@ class Users
         } catch (Exception $e) {
             return false;
         }
-        return true;
+        return $prepare->insert_id;
     }
 
     public function getUser($id)
