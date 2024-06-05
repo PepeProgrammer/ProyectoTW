@@ -65,51 +65,54 @@
             </div>
             <div id="items" class="items container_five five_items">
                 {% if bookings|length > 0 %}
-                {% for booking in bookings %}
-                    <div id="content" class="element">
-                        <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ booking.email }}</span>
-                        <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ booking.room_num }}</span>
-                        <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ booking.checkin }}</span>
-                        <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ booking.checkout }}</span>
-                        <div class="operations {{ loop.index % 2 == 0 ? 'odd' : 'even' }}">
-                            <img src="../images/edit.png" class="image_button"
-                                 alt="icono para editar reserva"
-                                 onclick="showElement('{{ booking.comments }}','{{ booking.id }}')"/>
+                    {% for booking in bookings %}
+                        <div id="content" class="element">
+                            <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ booking.email }}</span>
+                            <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ booking.room_num }}</span>
+                            <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ booking.checkin }}</span>
+                            <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ booking.checkout }}</span>
+                            <div class="operations {{ loop.index % 2 == 0 ? 'odd' : 'even' }}">
+                                <img src="../images/edit.png" class="image_button"
+                                     alt="icono para editar reserva"
+                                     onclick="showElement('{{ booking.comments }}','{{ booking.id }}')"/>
 
-                            <img src="../images/delete.png" class="image_button"
-                                 alt="icono para borrar reserva"
-                                 onclick="generateDeleteModal('¿Desea eliminar la reserva de la habitación {{ booking.room_num }}?','bookings.php', 'delete', 'Eliminar', {{ booking.id }})"/>
-                        </div>
+                                <img src="../images/delete.png" class="image_button"
+                                     alt="icono para borrar reserva"
+                                     onclick="generateDeleteModal('¿Desea eliminar la reserva de la habitación {{ booking.room_num }}?','bookings.php', 'delete', 'Eliminar', {{ booking.id }})"/>
+                            </div>
 
-                        <div id="{{ booking.id }}"
-                             class="container container_five  {{ loop.index % 2 == 0 ? 'odd' : 'even' }}">
-                            {% if booking.comments != "" %}
-                                <h3>Comentarios</h3>
-                                <p class="comments">{{ booking.comments }}</p>
-                            {% else %}
-                                <p>No hay comentarios</p>
-                            {% endif %}
-                            <div class="modifications" id="hidden_{{ booking.id }}" style="display: none;">
-                                <form action="bookings.php" method="post" novalidate>
-                                    <label id="modification_request_text" for="comments">Modificación de
-                                        comentario:</label>
-                                    <textarea name="comments" class="{{ loop.index % 2 == 0 ? 'even' : 'odd' }}"
-                                              id="comments" cols="30" rows="6">{{ booking.comments }}</textarea>
-                                    <input id="hidden_{{ booking.id }}" type="hidden" name="hidden_id" value="{{ booking.id }}">
-                                    <div>
-                                        <button type="submit" value="Modificar">Modificar</button>
-                                        <button value="cancelar" onclick="showElement()">Cancelar</button>
-                                    </div>
-                                </form>
+                            <div id="{{ booking.id }}"
+                                 class="container container_five  {{ loop.index % 2 == 0 ? 'odd' : 'even' }}">
+                                {% if booking.comments != "" %}
+                                    <h3>Comentarios</h3>
+                                    <p class="comments">{{ booking.comments }}</p>
+                                {% else %}
+                                    <p>No hay comentarios</p>
+                                {% endif %}
+                                <div class="modifications" id="hidden_{{ booking.id }}" style="display: none;">
+                                    <form action="bookings.php" method="post" novalidate>
+                                        <label id="modification_request_text" for="comments">Modificación de
+                                            comentario:</label>
+                                        <textarea name="comments" class="{{ loop.index % 2 == 0 ? 'even' : 'odd' }}"
+                                                  id="comments" cols="30" rows="6">{{ booking.comments }}</textarea>
+                                        <input id="hidden_{{ booking.id }}" type="hidden" name="hidden_id"
+                                               value="{{ booking.id }}">
+                                        <div>
+                                            <button type="submit" value="Modificar">Modificar</button>
+                                            <button value="cancelar" onclick="showElement()">Cancelar</button>
+                                        </div>
+                                    </form>
+                                </div>
+
                             </div>
 
                         </div>
-
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+                {% endif %}
             </div>
+
         </div>
-        {% endif %}
+
         <a class="redirection" href="createBooking.php">Crear reserva</a>
     </main>
 {% endblock %}

@@ -65,11 +65,12 @@
 
 
             </div>
-            {% if user.type == 'recepcionist' %}
-                <a class="redirection" href="room_data.php">Crear habitación</a>
-            {% endif %}
+
         {% else %}
             <p class="empty">Actualmente no hay usuarios registrados</p>
+        {% endif %}
+        {% if user.type == 'recepcionist' %}
+            <a class="redirection" href="room_data.php">Crear habitación</a>
         {% endif %}
     </main>
 {% endblock %}

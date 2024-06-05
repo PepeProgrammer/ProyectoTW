@@ -73,6 +73,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (isset($_POST['comments'])) {
             $twigVariables['comments'] = strip_tags($_POST['comments']);
+        } else {
+            $twigVariables['comments'] = "";
         }
 
         if(isset($_POST['people_num'])) {
