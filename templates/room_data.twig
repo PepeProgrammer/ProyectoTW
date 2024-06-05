@@ -2,7 +2,7 @@
 
 {% block style %}
     {{ parent() }}
-    <link rel="stylesheet" href="../css/createRoom.css">
+    <link rel="stylesheet" href="../css/room_data.css">
     <link rel="stylesheet" href="../css/lists.css">
 {% endblock %}
 
@@ -14,7 +14,7 @@
     <main>
         <h1>Crear habitación</h1>
 
-        <form id="room_form" action="createRoom.php" method="post" class="form" enctype="multipart/form-data"
+        <form id="room_form" action="room_data.php" method="post" class="form" enctype="multipart/form-data"
               novalidate>
             <label for="number">Número de habitación</label>
             <input type="text" name="number" id="number" value="{{ number }}" {{ readonly }}>

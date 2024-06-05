@@ -25,7 +25,7 @@ if($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['delete'])) {
         if ($user and !($user['type'] !== 'client' and $_SESSION['user']['type'] === 'recepcionist')){
             if($userDb->deleteUser($_GET['delete'])){
                 $logs->insertLog("Usuario eliminado. Id: " . $_GET['delete']);
-                $_SESSION['success'] = "Usuario eliminado correctamente";
+                $_SESSION['success'] = "Usuario y todas sus reservas eliminadas correctamente. Id: ${$_GET['delete']}";
             } else {
                 $_SESSION['error'] = "Error al eliminar el usuario";
             }

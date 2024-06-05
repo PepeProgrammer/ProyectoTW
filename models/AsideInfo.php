@@ -20,7 +20,7 @@ class AsideInfo
     private function getFreeRoomsNum() {
         $prepare = $this->db->prepare("SELECT COUNT(*) FROM rooms WHERE id NOT IN 
                                  (SELECT room_id FROM bookings WHERE state = 'confirmed' and checkin <= CURDATE() 
-                                                                 and checkout >= CURDATE())");
+                                                                 and checkout >= CURDATE()) and state = 'free'");
         $prepare->execute();
         $rooms = $prepare->get_result()->fetch_all();
         return $rooms[0][0];

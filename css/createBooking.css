@@ -16,20 +16,23 @@ h1 {
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
     width: 50%;
+    justify-content: space-between;
 }
 
 .booking_extradata {
     display: flex;
     flex-direction: column;
     background-color: #dddda7;
-    margin-bottom: 20px;
     padding: 0 0 15px 0;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
     width: 70%;
 }
 .inputs {
+    display: flex;
+    flex-direction: column;
     margin-right: 10px;
+    align-items: center;
 }
 
 .booking_extradata .inputs {
@@ -106,9 +109,20 @@ h2 {
 .room_img img {
     width: 300px;
     padding: 10px;
-    border-radius: 15px;
+    border-radius: 20px;
     height: fit-content;
     align-self: flex-end;
 }
 
+input[type="date"] {
+    width: 120px;
+}
 
+select {
+    width: 500px;
+}
+
+
+button, .redirection {
+    margin-top: 20px;
+}

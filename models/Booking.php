@@ -48,7 +48,7 @@ class Booking
         return $prepare->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getBookingsFiltered($data = [])
+    public function getBookingsFiltered($data = [], $user = -1)
     {
         if(empty($data)) {
             $data['search'] = "";
@@ -57,6 +57,7 @@ class Booking
         }
 
         if(!isset($data['search']) || trim($data['search']) == "") {
+//            echo "donde deberioa estar\n";
             $search = "%";
         } else {
             $search = "%" . $data['search'] . "%"; //con esto nos aseguramos de que al buscar el texto pueda aparecer cualquiera que contenga esa cadena
@@ -74,17 +75,24 @@ class Booking
             $order = 'ASC';
         }
 
-        $sql = "SELECT b.*, u.email, r.room_num FROM bookings AS b INNER JOIN users AS u ON b.user_id = u.id INNER JOIN rooms AS r ON b.room_id = r.id WHERE b.comments LIKE ? AND b.checkin >= ? AND b.checkout <= ? ORDER BY $orderby $order";
-        if (!isset($data['checkin']) || $data['checkin'] == "") {
+        if (!isset($data['checkin']) || $data['checkin'] == "" || $data['checkin'] == 0) {
             $data['checkin'] = "1980-01-01";
         }
-        if (!isset($data['checkout']) || $data['checkout'] == "") {
+        if (!isset($data['checkout']) || $data['checkout'] == "" || $data['checkout'] == 0) {
             $data['checkout'] = "2200-12-31";
         }
 
-        $prepare = $this->db->prepare($sql);
 
-        $prepare->bind_param("sss", $search, $data['checkin'], $data['checkout']);
+        if($user === -1){
+            $sql = "SELECT b.*, u.email, r.room_num FROM bookings AS b INNER JOIN users AS u ON b.user_id = u.id INNER JOIN rooms AS r ON b.room_id = r.id WHERE b.state = 'confirmed' AND b.comments LIKE ? AND b.checkin >= ? AND b.checkout <= ? ORDER BY $orderby $order";
+            $prepare = $this->db->prepare($sql);
+            $prepare->bind_param("sss", $search, $data['checkin'], $data['checkout']);
+        } else {
+            $sql = "SELECT b.*, u.email, r.room_num FROM bookings AS b INNER JOIN users AS u ON b.user_id = u.id INNER JOIN rooms AS r ON b.room_id = r.id WHERE b.state = 'confirmed' AND b.comments LIKE ? AND b.checkin >= ? AND b.checkout <= ? AND b.user_id = ? ORDER BY $orderby $order";
+            $prepare = $this->db->prepare($sql);
+            $prepare->bind_param("sssi", $search, $data['checkin'], $data['checkout'], $user);
+        }
+
         try {
             $prepare->execute();
         } catch (Exception $e) {
@@ -93,15 +101,9 @@ class Booking
         return $prepare->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getBookingsList()
-    {
-        $prepare = $this->db->prepare("SELECT b.*, u.email, r.room_num FROM bookings AS b INNER JOIN users AS u ON b.user_id = u.id INNER JOIN rooms AS r ON b.room_id = r.id ORDER BY checkin ASC ");
-        $prepare->execute();
-        return $prepare->get_result()->fetch_all(MYSQLI_ASSOC);
-    }
-
     public function confirmBooking($id)
     {
+        $this->cleanBookings();
         if (!$this->getBookingById($id)) {
             return false;
         }

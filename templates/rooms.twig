@@ -16,7 +16,7 @@
         <span class="success">{{ success }}</span>
         <span class="error">{{ error }}</span>
         {% if rooms|length > 0 %}
-            <div class="table_list {{  user.type == 'recepcionist' ?  'four_items' : 'three_items' }}">
+            <div class="table_list {{ user.type == 'recepcionist' ?  'four_items' : 'three_items' }}">
                 <div class="element">
                     <span class="border odd">Número</span>
                     <span class="border odd">Precio noche</span>
@@ -25,7 +25,7 @@
                         <span class="border {{ loop.index % 2 == 0 ? 'odd' : 'even' }}">operaciones</span>
                     {% endif %}
                 </div>
-                <div class="items {{  user.type == 'recepcionist' ?  'container_four four_items' : 'container_three three_items' }}">
+                <div class="items {{ user.type == 'recepcionist' ?  'container_four four_items' : 'container_three three_items' }}">
 
                     {% for room in rooms %}
                         <div class="element" onclick="detailsWindow('{{ room.id }}')">
@@ -34,17 +34,18 @@
                             <span class="{{ loop.index % 2 == 0 ? 'odd' : 'even' }}">{{ room.capacity }}</span>
                             {% if user.type == 'recepcionist' %}
                                 <div class="operations {{ loop.index % 2 == 0 ? 'odd' : 'even' }}">
-                                    <a href="createRoom.php?id={{ room.id }}">
+                                    <a href="room_data.php?id={{ room.id }}">
                                         <img src="../images/edit.png" class="image_button"
                                              alt="icono para editar habitacion"/>
                                     </a>
-                                    <img src="../images/delete.png" class="image_button" alt="icono para borrar habitación"
+                                    <img src="../images/delete.png" class="image_button"
+                                         alt="icono para borrar habitación"
                                          onclick="generateDeleteModal('¿Desea eliminar la habitación {{ room.room_num }}?','rooms.php', 'delete', 'Eliminar', {{ room.id }})"/>
                                 </div>
                             {% endif %}
 
                             <div id="{{ room.id }}"
-                                    class="container {{  user.type == 'recepcionist' ?  'container_four' : 'container_three' }}  {{ loop.index % 2 == 0 ? 'odd' : 'even' }}">
+                                 class="container {{ user.type == 'recepcionist' ?  'container_four' : 'container_three' }}  {{ loop.index % 2 == 0 ? 'odd' : 'even' }}">
 
                                 {% if room.images|length > 0 %}
                                     <h2>Fotos de la habitación</h2>
@@ -64,7 +65,9 @@
 
 
             </div>
-            <button onclick="window.location.href='createRoom.php'">Crear habitación</button>
+            {% if user.type == 'recepcionist' %}
+                <a class="redirection" href="room_data.php">Crear habitación</a>
+            {% endif %}
         {% else %}
             <p class="empty">Actualmente no hay usuarios registrados</p>
         {% endif %}

@@ -1,12 +1,11 @@
 var lastPetitionTime = 0;
 function generateDeleteUserModal(id, email) {
-    console.log("hola");
     modal = `
     <div class="modal">
         <div class="modal_content">
             <p>¿Seguro que deseas eliminar al usuario ${email}?</p>
             <div>
-                <button class="danger" onclick="window.location.href='users.php?delete=${id}'">Eliminar usuario</button>
+                <a class="redirection danger" href="users.php?delete=${id}">Eliminar usuario</a>
                 <button onclick="deleteModal()">Cancelar</button>
             </div>
         </div>
@@ -68,14 +67,13 @@ function searchBookings() {
     let checkin = $('#checkin').val();
     let checkout = $('#checkout').val();
 
-    console.log(checkout)
 
     //ordenación
     let orderby = $('#orderby').val();
     let order = $('#order').val();
 
     let now = Date.now();
-    if (now - lastPetitionTime > 100) { //Con esta línea evitamos que se puedan hacer peticiones continuas al servidor y sobrecargarlo
+    if (now - lastPetitionTime > 20) { //Con esta línea evitamos que se puedan hacer peticiones continuas al servidor y sobrecargarlo
         $.ajax({
             type: 'POST',
             url: '../extra/getBookings.php',
@@ -86,39 +84,49 @@ function searchBookings() {
                 orderby: orderby,
                 order: order
             },
-            success: function (response) {
-                console.log(response)
-                response = JSON.parse(response);
+            success: function (bookings) {
+                bookings = JSON.parse(bookings);
                 let content = "";
-                for (let i = 0; i < response.length; i++) {
-                    console.log(response[i])
+                for (let i = 0; i < bookings.length; i++) {
                     let css = i % 2 === 0 ? 'even' : 'odd';
+                    let textareaCss = i % 2 === 0 ? 'odd' : 'even';
                     let comments = "";
-                    if (response[i].comments !== "") {
+                    if (bookings[i].comments !== "") {
                         comments = `
                     <h3>Comentarios</h3>
-                    <p class="comments">${response[i].comments}</p>
+                    <p class="comments">${bookings[i].comments}</p>
 `
                     } else {
                         comments = "<p>No hay comentarios</p>";
                     }
                     content += `
                 <div class="element">
-                            <span class="${css}">${response[i].email}</span>
-                            <span class="${css}">${response[i].room_num}</span>
-                            <span class="${css}">${response[i].checkin}</span>
-                            <span class="${css}">${response[i].checkout}</span>
+                            <span class="${css}">${bookings[i].email}</span>
+                            <span class="${css}">${bookings[i].room_num}</span>
+                            <span class="${css}">${bookings[i].checkin}</span>
+                            <span class="${css}">${bookings[i].checkout}</span>
                             <div class="operations ${css}">
-                                <a href="createRoom.php?id={{ room.id }}">
-                                    <img src="../images/edit.png" class="image_button"
-                                         alt="icono para editar reserva"/>
-                                </a>
+                                
+                                <img src="../images/edit.png" class="image_button"
+                                     alt="icono para editar reserva" onclick="showElement('${bookings[i].comments}','${bookings[i].id}')"/>
+          
                                 <img src="../images/delete.png" class="image_button" alt="icono para borrar habitacion"
-                                     onclick="generateDeleteModal('¿Desea eliminar la reserva de la habitación ${response[i].room_num}','rooms.php', 'delete', 'Eliminar', ${response[i].id})"/>
+                                     onclick="generateDeleteModal('¿Desea eliminar la reserva de la habitación ${bookings[i].room_num}','checkBooking.php', 'delete', 'Eliminar', ${bookings[i].id})"/>
                             </div>
-                                <div id="${response[i].id}"
+                                <div id="${bookings[i].id}"
                                  class="container container_five ${css}">
                                     ${comments}
+                                    <div class="modifications" id="hidden_${bookings[i].id}" style="display: none;">
+                                            <form action="../pages/bookings.php" method="post" novalidate>
+                                                <label id="modification_request_text" for="comments">Modificación de comentario:</label>
+                                                <textarea name="comments" class="${textareaCss}" id="comments" cols="30" rows="6">${bookings[i].comments}</textarea>
+                                                <input id="hidden_id" type="hidden" name="hidden_id" value="">
+                                                <div>
+                                                    <button type="submit" value="Modificar">Modificar</button>
+                                                    <button value="cancelar" onclick="showElement()">Cancelar</button>
+                                                </div>
+                                            </form>
+                                        </div>
                                 </div>    
                 </div>
                 `;
@@ -132,7 +140,8 @@ function searchBookings() {
     }
 }
 
-function showElement(text= "",id= "-1", room = "", email = "") {
+function showElement(text= "",id= "-1") {
+    $('.modifications').hide();
     let hidden = document.getElementById(`hidden_${id}`);
     if (hidden.style.display === "none") {
         hidden.style.display = "block";
@@ -142,10 +151,4 @@ function showElement(text= "",id= "-1", room = "", email = "") {
 
     let textarea = document.getElementById("comments");
     textarea.value = text;
-
-    let input = document.getElementById("hidden_id");
-    input.value = id;
-
-    let label = document.getElementById("modification_request_text");
-    label.textContent = "Modificación del comentario:";
 }

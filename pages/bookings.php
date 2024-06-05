@@ -1,7 +1,7 @@
 <?php
 require_once "../vendor/autoload.php";
 require_once "../models/AsideInfo.php";
-require_once "../models/Room.php";
+require_once "../models/Rooms.php";
 require_once "../models/Booking.php";
 
 session_start();
@@ -12,10 +12,14 @@ $twig = new \Twig\Environment($loader);
 
 $asideInfo = new AsideInfo();
 $bookingDb = new Booking();
-$roomDb = new Room();
+$roomDb = new Rooms();
 $twigVariables = [];
 $twigVariables['aside'] = $asideInfo->getAsideInfo();
 
+if(!isset($_SESSION['user']) || $_SESSION['user']['type'] === 'admin') {
+    header('Location: index.php');
+    exit();
+}
 
 if(isset($_SESSION['user'])) {
     $twigVariables['user'] = $_SESSION['user'];
@@ -31,8 +35,8 @@ if(isset($_POST['delete'])) {
 
 $filters = [];
 
-if(count($_COOKIE) > 1) {
-    if(isset($_COOKIE['search']) && $_COOKIE['search'] !== 'data_empty'){
+if(isset($_COOKIE['search'])) { // si es igual a 1 tiene la cookie de sesión
+    if($_COOKIE['search'] !== 'data_empty'){
         $twigVariables['filters']['search'] = $_COOKIE['search'];
     } else {
         $twigVariables['filters']['search'] = "";
@@ -48,12 +52,12 @@ if(count($_COOKIE) > 1) {
     $twigVariables['filters']['order'] = $_COOKIE['order'];
     $filters = $twigVariables['filters'];
 }
-$twigVariables['bookings'] = $bookingDb->getBookingsFiltered($filters);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if(isset($_POST['hidden_id']) and isset($_POST['comments'])){
         if($_POST['hidden_id'] != ""){
             $comment = strip_tags($_POST['comments']);
+
             if( $bookingDb->modifyBooking($_POST['hidden_id'],$comment) ){
                 $twigVariables['success'] = "Comentario modificado correctamente";
             } else {
@@ -63,6 +67,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-$twigVariables['bookings'] = $bookingDb->getBookingsList();
+if($_SESSION['user']['type'] === "recepcionist") {
+    $twigVariables['bookings'] = $bookingDb->getBookingsFiltered($filters);
 
-echo $twig->render('checkBooking.twig', $twigVariables);
+} else {
+    $twigVariables['bookings'] = $bookingDb->getBookingsFiltered($filters, $_SESSION['user']['id']);
+}
+
+echo $twig->render('bookings.twig', $twigVariables);

@@ -13,11 +13,12 @@
                 <div class="booking_data">
                     <div class="inputs">
                         <label for="people_num">Número de personas:</label>
-                        <input type="number" id="people_num" name="people_num" min="1" value="{{ people_num }}" {{ confirmation }}>
+                        <input type="number" id="people_num" name="people_num" min="1"
+                               value="{{ people_num }}" {{ confirmation }}>
                     </div>
                     <div class="inputs">
                         <label for="checkin">Día de entrada:</label>
-                        <input type="date" id="checkin" name="checkin" value="{{ checkin }}"  {{ confirmation }}>
+                        <input type="date" id="checkin" name="checkin" value="{{ checkin }}" {{ confirmation }}>
                         <span class='error'>{{ checkin_error }}</span>
                     </div>
                     <div class="inputs">
@@ -30,7 +31,8 @@
                 <div class="booking_extradata">
                     <div class="inputs margin">
                         <label for="comments">Comentario:</label>
-                        <textarea id="comments" name="comments" rows="4" cols="50" {{ confirmation }}>{{ comments }}</textarea>
+                        <textarea id="comments" name="comments" rows="4"
+                                  cols="50" {{ confirmation }}>{{ comments }}</textarea>
                     </div>
 
                     {% if recepcionist_view %}
@@ -38,14 +40,13 @@
                             <label for="user_id">Cliente:</label>
                             <select id="user_id" name="user_id">
                                 {% for user in users %}
-                                    <option value="{{ user.id }}">Usuario: {{ user.name }} | Email: {{ user.email }} </option>
+                                    <option value="{{ user.id }}">Usuario: {{ user.name }} |
+                                        Email: {{ user.email }} </option>
                                 {% endfor %}
                             </select>
                         </div>
                     {% endif %}
                 </div>
-
-                <button type="submit" name="send" id="send" value="CONSULTAR">CONSULTAR</button>
 
 
                 {% if showFinding == true %}
@@ -59,18 +60,28 @@
                         <div class="room_data">
                             <p>Número de habitación: {{ room.room_num }}</p>
                             <p>Capacidad: {{ room.capacity }}</p>
+                            <p>Precio/noche: {{ room.price }}€</p>
                             <p>{{ room.description }}</p>
                         </div>
                         <input type="hidden" name="booking_id" value="{{ booking_id }}">
                         <div class="final_buttons">
-                            <button type="submit" name="accept" id="accept" value="ACEPTAR">ACEPTAR</button>
-                            <button type="submit" name="decline" id="decline" value="RECHAZAR">RECHAZAR</button>
+                            <button type="submit" name="accept" id="accept" value="ACEPTAR">Aceptar</button>
+                            <button type="submit" name="decline" id="decline" value="RECHAZAR">Rechazar</button>
                         </div>
                     </div>
-
+                {% else %}
+                    <span class='success'>{{ success }}</span>
+                    <span class='error'>{{ error }}</span>
+                    {% if success is not defined %}
+                        {% if error is not defined %}
+                            <button type="submit" name="send" id="send" value="CONSULTAR">Consultar</button>
+                        {% else %}
+                            <a class="redirection" href="createBooking.php">Reintentar reserva</a>
+                        {% endif %}
+                    {% endif %}
                 {% endif %}
-                <span class='success'>{{ success }}</span>
-                <span class='error'>{{ error }}</span>
+
+
             </form>
         </main>
     {% endblock %}

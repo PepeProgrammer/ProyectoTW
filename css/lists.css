@@ -90,6 +90,10 @@ div.container{
     cursor: pointer;
 }
 
+div.cursor:hover {
+    cursor: inherit;
+}
+
 .operations {
     display: flex;
     justify-content: center;
@@ -120,13 +124,14 @@ button {
 .images img:not(.image_button) {
     width: 300px;
     padding: 10px;
-    border-radius: 15px;
+    border-radius: 20px;
     height: fit-content;
     align-self: flex-end;
 }
 
 .items {
     display: grid;
+    max-height: 500px;
     overflow-y: auto;
 }
 

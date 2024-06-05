@@ -1,7 +1,8 @@
 <?php
 require_once "../models/Booking.php";
 
-$expiration = 3600 * 24;
+$expiration = 600; //las cookies duran 10 minutos
+session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $booking = new Booking();
@@ -38,8 +39,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 
-
-    $bookings = $booking->getBookingsFiltered($data);
+    if($_SESSION['user']['type'] === 'recepcionist') {
+        $bookings = $booking->getBookingsFiltered($data);
+    } else {
+        $bookings = $booking->getBookingsFiltered($data, $_SESSION['user']['id']);
+    }
     echo json_encode($bookings);
     exit();
 }

@@ -8,7 +8,7 @@
     {% endblock %}
 
     {% block script %}
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     {% endblock %}
 </head>
 <body>
@@ -28,20 +28,20 @@
         <li><a href="./rooms.php">Habitaciones</a></li>
         <li><a href="./servicios.php">Servicios</a></li>
         {% if user is not defined %}
-            <li><a href="./createUser.php">registrarse</a></li>
+            <li><a href="./user_data.php">registrarse</a></li>
         {% endif %}
 
         {% if user.type is defined and user.type != 'client' %}
             <li><a href="./users.php">Usuarios</a></li>
         {% elseif user.type == 'client' %}
             <li><a href="./profile.php">Perfil</a></li>
+            <li><a href="./createBooking.php">Hospedarse</a></li>
         {% endif %}
         {% if user.type == 'admin' %}
             <li><a href="./db.php">Base datos</a></li>
             <li><a href="./logs.php">Logs</a></li>
         {% elseif user is defined %}
-            <li><a href="./createBooking.php">Hospedarse</a></li>
-            <li><a href="./checkBooking.php">Reservas</a></li>
+            <li><a href="./bookings.php">Reservas</a></li>
         {% endif %}
 
 
