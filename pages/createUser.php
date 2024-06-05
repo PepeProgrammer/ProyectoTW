@@ -117,6 +117,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $DNI_error = "El DNI no es válido";
                     $correct = false;
                 } else {
+                    // comprobamos que el DNI sea correcto con el algoritmo de la letra (módulo 23)
                     $correct_letter = substr("TRWAGMYFPDXBNJZSQVHLCKE", $numbers % 23, 1);
                     if ($correct_letter !== $letter) {
                         $DNI_error = "La letra del DNI no es correcta";
@@ -177,6 +178,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $card_error = "El número de tarjeta no es válido";
                     $correct = false;
                 } else {
+                    // comprobamos que la tarjeta es válida con el algoritmo de Luhn
                     $sum = 0;
                     $length = strlen($card);
                     if ($length === 16) {

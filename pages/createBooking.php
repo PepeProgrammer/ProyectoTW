@@ -51,7 +51,7 @@ if ($_SESSION['user']['type'] === "recepcionist") {
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['accept'])) {
+    if (isset($_POST['accept'])) {  // si acepta la reserva, la confirmamos (tenemos en cuenta que ha podido ser borrada)
         $booking = new Booking();
         if( $booking->confirmBooking($_POST['booking_id']) ) {
             $twigVariables['confirmation'] = "readonly";
@@ -63,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if (isset($_POST['decline'])) {
-        $booking = new Booking();
+        $booking = new Booking();   // si la rechaza, la eliminamos
         $booking->deleteBooking($_POST['booking_id']);
         $logs->insertLog("Eliminamos reserva. Id: " . $_POST['booking_id'] );
         header("Location: index.php");
@@ -119,7 +119,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    if ($correct) {
+    if ($correct) { // si todo ha ido bien, buscamos habitación:
         $twigVariables['confirmation'] = "readonly";
         // buscamos en la base de datos
 

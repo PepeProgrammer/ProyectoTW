@@ -95,6 +95,7 @@ class Booking
 
     public function getBookingsList()
     {
+        // Obtenemos todas las reservas con los datos de la habitación y el usuario
         $prepare = $this->db->prepare("SELECT b.*, u.email, r.room_num FROM bookings AS b INNER JOIN users AS u ON b.user_id = u.id INNER JOIN rooms AS r ON b.room_id = r.id ORDER BY checkin ASC ");
         $prepare->execute();
         return $prepare->get_result()->fetch_all(MYSQLI_ASSOC);
@@ -105,7 +106,7 @@ class Booking
         if (!$this->getBookingById($id)) {
             return false;
         }
-
+        // Cambiamos el estado de la reserva a confirmado
         $sql = "UPDATE bookings SET state = 'confirmed' WHERE id = ?";
         $prepare = $this->db->prepare($sql);
         $prepare->bind_param("i", $id);
